@@ -1,0 +1,17 @@
+server:
+  port: 8899
+
+
+spring:
+  application:
+    name: miracle-common
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+
+
+
+
