@@ -8,7 +8,7 @@
         <version>2.3.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.miracle</groupId>
+    <groupId>pers.miracle.miraclecloud</groupId>
     <artifactId>miracle-cloud</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>miracle-cloud</name>
@@ -17,6 +17,10 @@
     <modules>
         <!-- 公共模块-->
         <module>miracle-common</module>
+        <!-- 路由模块-->
+        <module>miracle-gateway</module>
+        <!-- 系统模块-->
+        <module>miracle-system</module>
     </modules>
 
     <properties>
@@ -24,6 +28,13 @@
     </properties>
 
     <dependencies>
+        <!--引入公共模块-->
+        <dependency>
+            <groupId>pers.miracle.miraclecloud.common</groupId>
+            <artifactId>miracle-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

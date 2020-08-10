@@ -1,0 +1,62 @@
+server:
+  port: 8099
+
+
+spring:
+  application:
+    name: miracle-system
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/miracle_clould_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false
+    username: ENC(GNTGqKTs2Iu5LCeKJMXiYQ==)
+    password: ENC(BS8Z50ImQg3pd0yYonKB5Q==)
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 3600000
+      max-lifetime: 28800000
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    # 连接超时时间
+    timeout: 5s
+    lettuce:
+      pool:
+        max-active: 8   #最大连接数据库连接数,设 0 为没有限制
+        max-idle: 8     #最大等待连接中的数量,设 0 为没有限制
+        max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
+        min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
+
+
+
+mybatis-plus:
+  configuration:
+    # 是否将sql打印到控制面板(该配置会将sql语句和查询的结果都打印到控制台)
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 开启驼峰命名规则
+    map-underscore-to-camel-case: true
+  type-aliases-package: pers.miracle.miraclecloud.system.entity
+  mapper-locations: classpath:mapper/*.xml
+
+
+# 全局异常处理：抛出后会被GlobalExceptionHandler.class处理
+mvc:
+  # 出现错误时, 直接抛出异常
+  throw-exception-if-no-handler-found: true
+
+jasypt:
+  encryptor:
+    # 盐
+    password: tale666cqf88miracle6TALE_CQF
+    #    property:
+    # 自定义属性规则，默认前缀是“ENC(”，后缀为“)”
+#      prefix: "ENC["
+#      suffix: "]"

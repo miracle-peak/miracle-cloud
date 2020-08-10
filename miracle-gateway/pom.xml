@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.miracle</groupId>
+        <groupId>pers.miracle.miraclecloud</groupId>
         <artifactId>miracle-cloud</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.miracle</groupId>
+    <groupId>pers.miracle.miraclecloud.gateway</groupId>
     <artifactId>miracle-gateway</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>miracle-gateway</name>
@@ -35,14 +35,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>de.codecentric</groupId>-->
+<!--            <artifactId>spring-boot-admin-starter-server</artifactId>-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>io.micrometer</groupId>-->
