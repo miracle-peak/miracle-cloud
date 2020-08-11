@@ -1,7 +1,5 @@
 package pers.miracle.miraclecloud.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.NullSerializer;
 
@@ -12,8 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.NullSerializer;
  * @date: 2020/8/10 下午3:44
  */
 public class User {
-    @TableId(type = IdType.AUTO)
-    private Integer userId;
+    private String userId;
 
     /**
      * 用户名
@@ -37,12 +34,11 @@ public class User {
      */
     private String locked;
 
-
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

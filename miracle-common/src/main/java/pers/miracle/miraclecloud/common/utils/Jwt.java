@@ -5,7 +5,7 @@ import io.jsonwebtoken.Claims;
 /**
  * @author: 蔡奇峰
  **/
-public class JwtValidate {
+public class Jwt {
 
     private int errCode;
 
@@ -38,4 +38,6 @@ public class JwtValidate {
     public void setClaims(Claims claims) {
         this.claims = claims;
     }
+
+
 }

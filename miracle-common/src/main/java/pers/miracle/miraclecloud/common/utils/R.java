@@ -2,7 +2,6 @@ package pers.miracle.miraclecloud.common.utils;
 
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,7 +17,8 @@ public class R {
     private int code;
     private boolean success;
     private String message;
-    private Map<String, Object> data = new HashMap<>();
+    private Object data;
+    // private ConcurrentHashMap<String, Object> data = new ConcurrentHashMap<>();
 
     public static R ok(){
         R r = new R();
@@ -34,7 +34,7 @@ public class R {
         r.setMessage("操作成功");
         r.setCode(GlobalConstant.SUCCESS);
         r.setSuccess(true);
-        r.data(DATA_KEY, data);
+        r.setData(data);
 
         return r;
     }
@@ -54,13 +54,14 @@ public class R {
         r.setMessage("操作失败");
         r.setCode(GlobalConstant.ERROR);
         r.setSuccess(false);
-        r.data(DATA_KEY, data);
+        r.setData(data);
 
         return r;
     }
 
 
     // 链式编程=================
+
     public R success(Boolean success){
         this.setSuccess(success);
 
@@ -79,8 +80,8 @@ public class R {
         return this;
     }
 
-    public R data(String key, Object value){
-        this.data.put(key, value);
+    public R data(Object data){
+        this.data = data;
 
         return this;
     }
@@ -128,11 +129,12 @@ public class R {
         this.message = message;
     }
 
-    public Map<String, Object> getData() {
+
+    public Object getData() {
         return data;
     }
 
-    public void setData(Map<String, Object> data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

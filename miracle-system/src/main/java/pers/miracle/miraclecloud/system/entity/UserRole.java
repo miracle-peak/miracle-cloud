@@ -6,27 +6,25 @@ package pers.miracle.miraclecloud.system.entity;
  */
 public class UserRole {
 
-    private Integer userId;
+    private String userId;
 
-    private Integer roleId;
+    private String roleId;
 
-
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
-
 
     @Override
     public String toString() {

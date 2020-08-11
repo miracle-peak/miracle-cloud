@@ -13,9 +13,12 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
+      # 连接池中允许的最小连接数。缺省值：10
       minimum-idle: 5
-      idle-timeout: 3600000
-      max-lifetime: 28800000
+      # 一个连接idle状态的最大时长（毫秒）,超时则被释放（retired）,缺省:10分钟
+      idle-timeout: 600000
+      # 一个连接的生命时长（毫秒）,超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒
+      max-lifetime: 17800000
 
   cloud:
     nacos:

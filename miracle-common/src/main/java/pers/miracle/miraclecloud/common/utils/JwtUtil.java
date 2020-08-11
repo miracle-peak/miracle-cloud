@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
 import javax.crypto.SecretKey;
@@ -27,16 +28,14 @@ public class JwtUtil {
      *
      * @param id
      * @param userName
-     * @param uType
      * @param expireTime
      * @return
      */
-    public static String createToken(String id, String userName, String uType, Date expireTime) {
+    public static String createToken(String id, String userName, Date expireTime) {
         Map<String, Object> info = new HashMap<>(6);
 
         info.put("id", id);
         info.put("userName", userName);
-        info.put("role", uType);
 
         SecretKey key = getSecret();
 
@@ -59,9 +58,9 @@ public class JwtUtil {
      * @param jwt
      * @return
      */
-    public static JwtValidate validateJwt(String jwt) {
+    public static Jwt validateJwt(String jwt) {
 
-        JwtValidate validate = new JwtValidate();
+        Jwt validate = new Jwt();
 
         Claims claims = null;
 
@@ -111,4 +110,5 @@ public class JwtUtil {
 
         return key;
     }
+
 }

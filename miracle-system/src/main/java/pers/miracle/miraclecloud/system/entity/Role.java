@@ -1,7 +1,5 @@
 package pers.miracle.miraclecloud.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 
 /**
  * 角色
@@ -10,8 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @date: 2020/8/10 下午3:51
  */
 public class Role {
-    @TableId(type = IdType.AUTO)
-    private Integer roleId;
+    private String roleId;
 
     /**
      * 角色名称
@@ -24,13 +21,11 @@ public class Role {
      */
     private String locked;
 
-
-
-    public Integer getRoleId() {
+    public String getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Integer roleId) {
+    public void setRoleId(String roleId) {
         this.roleId = roleId;
     }
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="pers.miracle.miraclecloud.system.entity.User">
+<mapper namespace="pers.miracle.miraclecloud.system.mapper.UserMapper">
 
     <resultMap id="userResult" type="User">
         <id column="user_id" property="userId"/>
@@ -11,9 +10,19 @@
         <result column="locked" property="locked"/>
     </resultMap>
 
-<!--    <select id="list" parameterMap="User" >-->
-<!--        -->
-<!--    </select>-->
+    <select id="listByUser" parameterType="User" resultMap="userResult">
+        select * from user
+        where 1 = 1
+        <if test="userName != null and userName != ''">
+            AND user_name like concat('%', #{userName}, '%')
+        </if>
+        <if test="locked != null and locked != ''">
+            AND locked = #{locked}
+        </if>
+        <if test="mail != null and mail != ''">
+            AND mail like concat('%', #{mail}, '%')
+        </if>
+    </select>
 
 
 </mapper>
