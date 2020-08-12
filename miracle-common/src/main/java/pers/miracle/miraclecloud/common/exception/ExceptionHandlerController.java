@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
  * 用于未被全局异常处理的错误 如：404
  *
  * @author: 蔡奇峰
- * date: 2020/3/31 10:02
  * @Version V1.0
  **/
 @RestController

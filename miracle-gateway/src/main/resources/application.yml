@@ -61,6 +61,10 @@ spring:
 #        shutdown-timeout: 400ms
 
 
+# 全局异常处理：抛出后会被GlobalExceptionHandler.class处理
+#mvc:
+#  #出现错误时, 直接抛出异常
+#  throw-exception-if-no-handler-found: true
 
 management:
   endpoints:

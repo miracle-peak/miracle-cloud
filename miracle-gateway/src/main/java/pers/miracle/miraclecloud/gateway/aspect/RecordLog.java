@@ -16,8 +16,8 @@ import java.lang.reflect.Method;
  * @date: 2020/8/10 下午3:12
  */
 @Aspect
-public class LoginLog {
-    private static final Logger log = LoggerFactory.getLogger(LoginLog.class);
+public class RecordLog {
+    private static final Logger log = LoggerFactory.getLogger(RecordLog.class);
 
     /**
      * 切入点,使用注解@Log的方法则保存日志

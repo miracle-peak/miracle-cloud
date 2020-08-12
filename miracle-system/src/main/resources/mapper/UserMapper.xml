@@ -24,5 +24,9 @@
         </if>
     </select>
 
+    <select id="getOne" resultMap="userResult">
+        select * from user where user_name = #{userName} and password = #{password} limit 1
+    </select>
+
 
 </mapper>

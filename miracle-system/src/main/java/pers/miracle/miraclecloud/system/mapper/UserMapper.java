@@ -1,8 +1,10 @@
 package pers.miracle.miraclecloud.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import pers.miracle.miraclecloud.system.entity.User;
+
 import java.util.List;
 
 /**
@@ -19,4 +21,13 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     List<User> listByUser(User user);
+
+    /**
+     * 用户精确查询
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    User getOne(@Param("userName") String userName, @Param("password") String password);
 }

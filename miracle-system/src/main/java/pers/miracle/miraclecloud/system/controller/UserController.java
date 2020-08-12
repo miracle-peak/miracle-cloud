@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.service.IUserService;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -51,10 +52,29 @@ public class UserController {
     public R list(User user) {
         List<User> list = service.listByUser(user);
 
-        log.info("list:{}",list.toString());
         return R.ok(list);
     }
+    /**
+     * 修改用户
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/update")
+    public R update(@RequestBody User user) {
+        return service.updateById(user) ? R.ok() : R.error();
+    }
 
+    /**
+     * 批量删除用户（删除单个也可用）
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/delete")
+    public R delete(@RequestBody String[] ids){
+        return service.removeByIds(Arrays.asList(ids)) ? R.ok() : R.error();
+    }
 
     /**
      * 添加/注册用户
@@ -67,17 +87,13 @@ public class UserController {
         // 密码加盐加密
         String password = Md5Util.saltEncryption(user.getPassword());
         user.setPassword(password);
-        LocalDate time = LocalDate.now();
         // 生成用户唯一id
+        LocalDate time = LocalDate.now();
         Integer num = new Random().nextInt(18000);
         String id = time + "-" +  (System.currentTimeMillis() + "").substring(7) + num;
 
         user.setUserId(id);
-        boolean flag = service.save(user);
-        if (! flag){
-            return R.error();
-        }
-        return R.ok();
+        return service.save(user) ? R.ok() : R.error("注册用户失败！请重试");
     }
 
 

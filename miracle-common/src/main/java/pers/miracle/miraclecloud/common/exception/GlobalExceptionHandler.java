@@ -18,8 +18,8 @@ import pers.miracle.miraclecloud.common.utils.R;
 
 /**
  * 全局异常处理
+ *
  * @author: 蔡奇峰
- * date: 2020/3/31 9:44
  * @Version V1.0
  **/
 @RestControllerAdvice
@@ -33,13 +33,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({HttpMessageNotReadableException.class, MissingServletRequestParameterException.class, BindException.class,
             ServletRequestBindingException.class, MethodArgumentNotValidException.class})
     public R handleHttpMessageNotReadableException(Exception e) {
-        if (e instanceof BindException){
-            log.error("BindException 400---->", ((BindException)e).getAllErrors().get(0).getDefaultMessage());
-            return new R(GlobalConstant.EXCEPTION_400, ((BindException)e).getAllErrors().get(0).getDefaultMessage());
+        if (e instanceof BindException) {
+            log.error("BindException 400---->{}", ((BindException) e).getAllErrors().get(0).getDefaultMessage());
+            return new R(GlobalConstant.EXCEPTION_400, ((BindException) e).getAllErrors().get(0).getDefaultMessage());
         }
-        log.error("400 -->", e.getMessage());
+        log.error("400 -->{}", e.getMessage());
         return new R(GlobalConstant.EXCEPTION_400, e.getMessage());
     }
+
     /**
      * 405 - Method Not Allowed
      * 带有@ResponseStatus注解的异常类会被ResponseStatusExceptionResolver 解析
@@ -52,10 +53,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public R runtimeException(RuntimeException e){
+    public R runtimeException(RuntimeException e) {
         log.error("运行时异常：" + e.getMessage());
 
-        return R.error().message("runtime exception");
+        return R.error().message(e.getMessage());
     }
 
 

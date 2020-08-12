@@ -15,7 +15,6 @@ public class Role {
      */
     private String name;
 
-
     /**
      * 是否锁定 默认正常 0 锁定 1
      */

@@ -1,6 +1,5 @@
 package pers.miracle.miraclecloud.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import pers.miracle.miraclecloud.common.utils.RedisUtil;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.mapper.UserMapper;
 import pers.miracle.miraclecloud.system.service.IUserService;
+import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +24,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     private UserMapper mapper;
 
-    private RedisUtil redisUtil = new RedisUtil();
+    @Resource
+    private RedisUtil redisUtil;
 
     /**
      * 登录验证
@@ -35,11 +36,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      */
     @Override
     public String login(String userName, String password) {
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("user_name", userName);
-        wrapper.eq("password", password);
+        /*User one = query().eq("user_name", userName)
+                .eq("password", password)
+                //.one();
+                .oneOpt()
+                .orElseThrow(() -> new RuntimeException("登录失败！用户名或密码错误！"));*/
 
-        User user = mapper.selectOne(wrapper);
+        User user = mapper.getOne(userName, password);
         if (null != user) {
             String token = redisUtil.getStr(user.getUserId() + "");
 
