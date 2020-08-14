@@ -10,8 +10,13 @@
         <result column="locked" property="locked"/>
     </resultMap>
 
+    <!--不使用select * 效率低-->
+    <sql id="UserVo">
+        select user_id, user_name, password, mail, locked from user
+    </sql>
+
     <select id="listByUser" parameterType="User" resultMap="userResult">
-        select * from user
+        <include refid="UserVo"/>
         where 1 = 1
         <if test="userName != null and userName != ''">
             AND user_name like concat('%', #{userName}, '%')
@@ -25,8 +30,20 @@
     </select>
 
     <select id="getOne" resultMap="userResult">
-        select * from user where user_name = #{userName} and password = #{password} limit 1
+        <include refid="UserVo"/>
+        where user_name = #{userName} and password = #{password} limit 1
     </select>
+
+    <insert id="bingRole">
+        insert into user_role(user_id, role_id) values
+        <foreach collection="roles" item="role" separator=",">
+            (#{userId}, #{role.roleId})
+        </foreach>
+    </insert>
+
+    <delete id="clearRole">
+        delete from user_role where user_id = #{userId}
+    </delete>
 
 
 </mapper>

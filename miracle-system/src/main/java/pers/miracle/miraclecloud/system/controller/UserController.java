@@ -9,6 +9,8 @@ import pers.miracle.miraclecloud.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.service.IUserService;
+import pers.miracle.miraclecloud.system.vo.UserRoleVO;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -19,13 +21,12 @@ import java.util.Random;
  * @date: 2020/8/10 下午5:04
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/system/user")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(User.class);
 
     @Autowired
     private IUserService service;
-
 
     /**
      * 登录
@@ -54,15 +55,40 @@ public class UserController {
 
         return R.ok(list);
     }
+
+    /**
+     * 修改用户并更新其角色
+     *
+     * @param vo
+     * @return
+     */
+    @PostMapping("/update")
+    public R update(@RequestBody UserRoleVO vo) {
+        service.updateRole(vo);
+        return R.ok();
+    }
+
     /**
      * 修改用户
      *
      * @param user
      * @return
      */
-    @PostMapping("/update")
-    public R update(@RequestBody User user) {
+    @PostMapping("/edit")
+    public R edit(@RequestBody User user) {
         return service.updateById(user) ? R.ok() : R.error();
+    }
+
+    /**
+     * 批量删除用户并清空其角色（删除单个也可用）
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/delete")
+    public R remove(@RequestBody String[] ids) {
+        service.deleteRole(ids);
+        return R.ok();
     }
 
     /**
@@ -72,28 +98,29 @@ public class UserController {
      * @return
      */
     @PostMapping("/delete")
-    public R delete(@RequestBody String[] ids){
+    public R delete(@RequestBody String[] ids) {
         return service.removeByIds(Arrays.asList(ids)) ? R.ok() : R.error();
     }
 
     /**
-     * 添加/注册用户
+     * 添加/注册用户并绑定角色
      *
      * @param user
      * @return
      */
     @PostMapping("/add")
-    public R add(@RequestBody User user){
+    public R add(@RequestBody UserRoleVO user) {
         // 密码加盐加密
         String password = Md5Util.saltEncryption(user.getPassword());
         user.setPassword(password);
-        // 生成用户唯一id
+        // 生成用户唯一id,并发大的时候可能重复, 可用IdUtil.simpleUUID()替代 博主简化处理在不创建creat_time字段,还可以知道时间
         LocalDate time = LocalDate.now();
-        Integer num = new Random().nextInt(18000);
-        String id = time + "-" +  (System.currentTimeMillis() + "").substring(7) + num;
-
+        Integer num = new Random().nextInt(99999);
+        String id = time + "-" + (System.currentTimeMillis() + "").substring(7) + num;
         user.setUserId(id);
-        return service.save(user) ? R.ok() : R.error("注册用户失败！请重试");
+
+        service.addUser(user);
+        return R.ok();
     }
 
 

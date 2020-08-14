@@ -2,6 +2,8 @@ package pers.miracle.miraclecloud.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import pers.miracle.miraclecloud.system.entity.User;
+import pers.miracle.miraclecloud.system.vo.UserRoleVO;
+
 import java.util.List;
 
 /**
@@ -27,4 +29,25 @@ public interface IUserService extends IService<User> {
      * @return
      */
     List<User> listByUser(User user);
+
+    /**
+     * 添加/注册用户并绑定角色
+     *
+     * @param vo
+     */
+    void addUser(UserRoleVO vo);
+
+    /**
+     * 更新用户及其角色
+     *
+     * @param vo
+     */
+    void updateRole(UserRoleVO vo);
+
+    /**
+     * 删除用户并清空其角色
+     *
+     * @param ids
+     */
+    void deleteRole(String[] ids);
 }

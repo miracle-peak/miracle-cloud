@@ -3,6 +3,7 @@ package pers.miracle.miraclecloud.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.entity.User;
 
 import java.util.List;
@@ -30,4 +31,20 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User getOne(@Param("userName") String userName, @Param("password") String password);
+
+
+    /**
+     * 绑定角色
+     *
+     * @param userId
+     * @param roles
+     */
+    void bingRole(@Param("userId") String userId, @Param("roles") List<Role> roles);
+
+    /**
+     * 清空用户的角色
+     *
+     * @param userId
+     */
+    void clearRole(@Param("userId") String userId);
 }

@@ -3,13 +3,17 @@ package pers.miracle.miraclecloud.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.RedisUtil;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.mapper.UserMapper;
 import pers.miracle.miraclecloud.system.service.IUserService;
+import pers.miracle.miraclecloud.system.vo.UserRoleVO;
+
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -57,17 +61,59 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 // 获取过期时间的时间戳
                 long time = expireTime.getTime();
                 // 创建jwt
-                token = JwtUtil.createToken(user.getUserId() , user.getUserName(), expireTime);
+                token = JwtUtil.createToken(user.getUserId(), user.getUserName(), expireTime);
                 // 存jwt到redis过期时间6天
                 redisUtil.setToken(user.getUserId() + "", token, time);
             }
 
             return token;
-        }else {
+        } else {
             throw new RuntimeException("用户名或密码错误！");
         }
 
 
+    }
+
+    /**
+     * 添加/注册用户并绑定角色
+     *
+     * @param vo
+     */
+    @Override
+    public void addUser(UserRoleVO vo) {
+        save(vo);
+
+        if (!CollectionUtils.isEmpty(vo.getRoles())) {
+            mapper.bingRole(vo.getUserId(), vo.getRoles());
+        }
+    }
+
+    /**
+     * 更新用户及其角色
+     *
+     * @param vo
+     */
+    @Override
+    public void updateRole(UserRoleVO vo) {
+        updateById(vo);
+        mapper.clearRole(vo.getUserId());
+        if (!CollectionUtils.isEmpty(vo.getRoles())) {
+            mapper.bingRole(vo.getUserId(), vo.getRoles());
+        }
+    }
+
+    /**
+     * 删除用户并清空其角色
+     *
+     * @param ids
+     */
+    @Override
+    public void deleteRole(String[] ids) {
+        removeByIds(Arrays.asList(ids));
+
+        for (String id : ids) {
+            mapper.clearRole(id);
+        }
     }
 
     @Override
@@ -75,4 +121,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         return mapper.listByUser(user);
     }
+
+
 }
