@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>pers.miracle.miraclecloud.stsytem</groupId>
-    <artifactId>miralce-system</artifactId>
+    <artifactId>miracle-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>miracle-system</name>
     <description>Demo project for Spring Boot</description>
@@ -35,6 +35,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.13</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <!-- jwt-->

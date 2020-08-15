@@ -61,6 +61,10 @@ public class IpUtil {
 
     public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
+        // 解析不了ip
+        if (null == addr){
+            return true;
+        }
         return internalIp(addr) || "127.0.0.1".equals(ip);
     }
 

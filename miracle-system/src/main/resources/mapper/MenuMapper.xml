@@ -13,4 +13,25 @@
         <result property="menuType" column="menu_type"/>
         <result property="visible" column="visible"/>
     </resultMap>
+
+    <sql id="menuSelect">
+        select id, menuName, parentName, parentId, orderNum,  path,
+         component, isFrame, menuType, visible
+    </sql>
+
+    <select id="ListByMenu" parameterType="Menu" resultMap="menuResult">
+        <include refid="menuSelect"/>
+        <where>
+            <if test="menuName != null and menuName != ''">
+                AND menu_name like concat('%', #{menuName}, '%')
+            </if>
+            <if test="visible != null and visible != ''">
+                AND visible = #{visible}
+            </if>
+        </where>
+        order by parent_id, order_num
+    </select>
+
+
+
 </mapper>

@@ -4,6 +4,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 import pers.miracle.miraclecloud.common.annotation.EnableGlobalExceptionHandler;
 
 /**
@@ -11,7 +12,8 @@ import pers.miracle.miraclecloud.common.annotation.EnableGlobalExceptionHandler;
  */
 @MapperScan("pers.miracle.miraclecloud.system.mapper")
 @EnableEncryptableProperties
-@EnableGlobalExceptionHandler // 使用异常处理类
+@EnableAsync
+//@EnableGlobalExceptionHandler // 使用异常处理类
 @SpringBootApplication(scanBasePackages = {"pers.miracle.miraclecloud", "pers.miracle.miraclecloud.common"})
 public class MiracleSystemApplication {
 

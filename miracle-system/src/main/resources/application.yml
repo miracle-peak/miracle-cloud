@@ -42,8 +42,8 @@ spring:
 
 mybatis-plus:
   configuration:
-    # 是否将sql打印到控制面板(该配置会将sql语句和查询的结果都打印到控制台)
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    # 是否将sql打印到控制面板(该配置会将sql语句和查询的结果都打印到控制台)
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     # 开启驼峰命名规则
     map-underscore-to-camel-case: true
   type-aliases-package: pers.miracle.miraclecloud.system.entity

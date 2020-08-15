@@ -41,6 +41,7 @@ public class UserController {
         String password = Md5Util.saltEncryption(user.getPassword());
         // 获取or创建当前用户token
         String token = service.login(user.getUserName(), password);
+
         return R.ok(token).data("role");
     }
 
@@ -85,7 +86,7 @@ public class UserController {
      * @param ids
      * @return
      */
-    @PostMapping("/delete")
+    @PostMapping("/remove")
     public R remove(@RequestBody String[] ids) {
         service.deleteRole(ids);
         return R.ok();

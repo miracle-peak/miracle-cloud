@@ -6,7 +6,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
-    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="login_time"  property="loginTime" />
     <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="msg" jdbcType="VARCHAR" property="msg" />
     <result column="status" jdbcType="CHAR" property="status" />
@@ -14,97 +14,5 @@
   <sql id="Base_Column_List">
     id, user_name, ip, login_time, city, msg, `status`
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from login_log
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from login_log
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="pers.miracle.miraclecloud.system.entity.LoginLog" useGeneratedKeys="true">
-    insert into login_log (user_name, ip, login_time, 
-      city, msg, `status`)
-    values (#{userName,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
-      #{city,jdbcType=VARCHAR}, #{msg,jdbcType=VARCHAR}, #{status,jdbcType=CHAR})
-  </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="pers.miracle.miraclecloud.system.entity.LoginLog" useGeneratedKeys="true">
-    insert into login_log
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="ip != null">
-        ip,
-      </if>
-      <if test="loginTime != null">
-        login_time,
-      </if>
-      <if test="city != null">
-        city,
-      </if>
-      <if test="msg != null">
-        msg,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="ip != null">
-        #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null">
-        #{loginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="city != null">
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="msg != null">
-        #{msg,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="pers.miracle.miraclecloud.system.entity.LoginLog">
-    update login_log
-    <set>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="ip != null">
-        ip = #{ip,jdbcType=VARCHAR},
-      </if>
-      <if test="loginTime != null">
-        login_time = #{loginTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="msg != null">
-        msg = #{msg,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=CHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="pers.miracle.miraclecloud.system.entity.LoginLog">
-    update login_log
-    set user_name = #{userName,jdbcType=VARCHAR},
-      ip = #{ip,jdbcType=VARCHAR},
-      login_time = #{loginTime,jdbcType=TIMESTAMP},
-      city = #{city,jdbcType=VARCHAR},
-      msg = #{msg,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=CHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+
 </mapper>

@@ -1,26 +1,41 @@
 package pers.miracle.miraclecloud.system.entity;
 
-import java.io.Serializable;
-import java.util.Date;
 
+import java.io.Serializable;
 
 /**
- *
  * @author 蔡奇峰
  */
 public class LoginLog implements Serializable {
     private Long id;
-
+    /**
+     * 登录用户名
+     */
     private String userName;
 
+    /**
+     * 用户的ip
+     */
     private String ip;
 
-    private Date loginTime;
+    /**
+     * 登录时间
+     */
+    private String loginTime;
 
+    /**
+     * 用户所在城市
+     */
     private String city;
 
+    /**
+     * 登录提示信息
+     */
     private String msg;
 
+    /**
+     * 登录状态 0 成功 1 失败
+     */
     private String status;
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +64,11 @@ public class LoginLog implements Serializable {
         this.ip = ip;
     }
 
-    public Date getLoginTime() {
+    public String getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
+    public void setLoginTime(String loginTime) {
         this.loginTime = loginTime;
     }
 

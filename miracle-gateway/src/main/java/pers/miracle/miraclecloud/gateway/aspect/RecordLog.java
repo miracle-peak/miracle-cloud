@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import pers.miracle.miraclecloud.common.utils.R;
 import java.lang.reflect.Method;
 
@@ -14,14 +15,15 @@ import java.lang.reflect.Method;
  * @author: 蔡奇峰
  * @date: 2020/8/10 下午3:12
  */
-@Aspect
+//@Aspect
+//@Component
 public class RecordLog {
     private static final Logger log = LoggerFactory.getLogger(RecordLog.class);
 
     /**
      * 切入点,使用注解@Log的方法则保存日志
      */
-    @Pointcut("@annotation(pers.miracle.miraclecloud.gateway.annotation.Log)")
+    @Pointcut("@annotation(pers.miracle.miraclecloud.common.annotation.Log)")
     public void saveLog() {
     }
 
