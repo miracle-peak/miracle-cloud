@@ -14,6 +14,7 @@
         <result property="visible" column="visible"/>
     </resultMap>
 
+    <!--不使用select * 效率低-->
     <sql id="menuSelect">
         select id, menuName, parentName, parentId, orderNum,  path,
          component, isFrame, menuType, visible
@@ -32,6 +33,15 @@
         order by parent_id, order_num
     </select>
 
+
+    <select id="listByRole">
+        <include refid="menuSelect"/>
+        select m.* from menu m RIGHT JOIN role_menu rm on m.id = rm.menu_id where
+        role_id in
+        <foreach collection="roleIds" separator="," open="(" close=")" item="item">#{item}</foreach>
+
+        order by m.parent_id, m.order_num
+    </select>
 
 
 </mapper>

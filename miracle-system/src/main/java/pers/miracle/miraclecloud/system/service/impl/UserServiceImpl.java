@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.RedisUtil;
+import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.mapper.UserMapper;
 import pers.miracle.miraclecloud.system.service.IUserService;
@@ -114,6 +115,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         for (String id : ids) {
             mapper.clearRole(id);
         }
+    }
+
+    @Override
+    public List<String> rolesByUserId(String userId) {
+        return mapper.rolesByUserId(userId);
     }
 
     @Override

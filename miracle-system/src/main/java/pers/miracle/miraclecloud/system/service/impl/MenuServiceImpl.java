@@ -7,6 +7,7 @@ import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.mapper.MenuMapper;
 import pers.miracle.miraclecloud.system.service.IMenuService;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,5 +23,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public List<Menu> ListByMenu(Menu menu) {
         return menuMapper.ListByMenu(menu);
+    }
+
+    @Override
+    public List<Menu> listByRole(Collection<String> roleIds) {
+        return menuMapper.listByRole(roleIds);
     }
 }

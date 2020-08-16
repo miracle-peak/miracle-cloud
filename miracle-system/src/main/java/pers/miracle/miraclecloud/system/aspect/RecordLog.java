@@ -52,7 +52,6 @@ public class RecordLog {
      */
     @AfterReturning(value = "saveLog()", returning = "result")
     public void saveLog(JoinPoint joinPoint, Object result) {
-        System.out.println("=====================");
         // boolean isSuccess = false;
         String msg = "";
         if (result instanceof R) {
@@ -126,7 +125,7 @@ public class RecordLog {
 
         String ip = IpUtil.getIpAddress(request);
         if (!StringUtils.isEmpty(method.getName()) && method.getName().equals("login")) {
-            String status = null != e ? "0" : "1";
+            String status = null == e ? "0" : "1";
             // 保存登录记录
             saveLogin(ip, msg, status, args);
         } else {

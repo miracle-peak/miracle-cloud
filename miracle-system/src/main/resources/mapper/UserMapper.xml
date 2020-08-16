@@ -45,5 +45,8 @@
         delete from user_role where user_id = #{userId}
     </delete>
 
+    <select id="rolesByUserId" resultType="java.lang.String">
+        select role_id from user_role where user_id = #{user.id}
+    </select>
 
 </mapper>

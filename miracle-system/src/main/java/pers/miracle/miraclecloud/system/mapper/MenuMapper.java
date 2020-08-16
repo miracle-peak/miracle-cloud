@@ -1,9 +1,11 @@
 package pers.miracle.miraclecloud.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import pers.miracle.miraclecloud.system.entity.Menu;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,4 +21,12 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return
      */
     List<Menu> ListByMenu(Menu menu);
+
+    /**
+     * 根据角色查询菜单
+     *
+     * @param roleIds
+     * @return
+     */
+    List<Menu> listByRole(@Param("roleIds") Collection<String> roleIds);
 }

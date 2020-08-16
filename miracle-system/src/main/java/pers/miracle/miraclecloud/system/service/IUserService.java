@@ -1,6 +1,8 @@
 package pers.miracle.miraclecloud.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
+import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.vo.UserRoleVO;
 
@@ -50,4 +52,12 @@ public interface IUserService extends IService<User> {
      * @param ids
      */
     void deleteRole(String[] ids);
+
+    /**
+     * 查询用户的角色
+     *
+     * @param userId
+     * @return
+     */
+    List<String> rolesByUserId(String userId);
 }

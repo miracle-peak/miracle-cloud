@@ -1,8 +1,10 @@
 package pers.miracle.miraclecloud.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.ibatis.annotations.Param;
 import pers.miracle.miraclecloud.system.entity.Menu;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -17,4 +19,13 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     List<Menu> ListByMenu(Menu menu);
+
+
+    /**
+     * 根据角色查询菜单
+     *
+     * @param roleIds
+     * @return
+     */
+    List<Menu> listByRole(Collection<String> roleIds);
 }

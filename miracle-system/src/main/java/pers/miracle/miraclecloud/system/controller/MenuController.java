@@ -6,6 +6,10 @@ import pers.miracle.miraclecloud.common.utils.R;
 import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.service.IMenuService;
+import pers.miracle.miraclecloud.system.service.IUserService;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author: 蔡奇峰
@@ -16,6 +20,8 @@ import pers.miracle.miraclecloud.system.service.IMenuService;
 public class MenuController {
     @Autowired
     private IMenuService service;
+    @Autowired
+    private IUserService userService;
 
     /**
      * 添加菜单
@@ -55,12 +61,14 @@ public class MenuController {
     /**
      * 获取角色对应菜单
      *
-     * @param roleId
+     * @param userId
      * @return
      */
-    @GetMapping("/menuTree/{roleId}")
-    public R menuTreeByRole(@PathVariable("roleId") String roleId) {
+    @GetMapping("/menuTree/{userId}")
+    public R menuTreeByRole(@PathVariable("userId") String userId) {
+        List<String> roleIds = userService.rolesByUserId(userId);
+        List<Menu> menus = service.listByRole(roleIds);
 
-        return R.ok();
+        return R.ok(menus);
     }
 }

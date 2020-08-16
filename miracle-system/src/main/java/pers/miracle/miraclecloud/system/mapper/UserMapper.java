@@ -47,4 +47,12 @@ public interface UserMapper extends BaseMapper<User> {
      * @param userId
      */
     void clearRole(@Param("userId") String userId);
+
+    /**
+     * 查询用户的角色
+     *
+     * @param userId
+     * @return
+     */
+    List<String> rolesByUserId(@Param("userId") String userId);
 }
