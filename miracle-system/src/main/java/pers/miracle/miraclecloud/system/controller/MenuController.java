@@ -1,13 +1,16 @@
 package pers.miracle.miraclecloud.system.controller;
 
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.R;
 import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.service.IMenuService;
 import pers.miracle.miraclecloud.system.service.IUserService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +25,8 @@ public class MenuController {
     private IMenuService service;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * 添加菜单
@@ -66,6 +71,22 @@ public class MenuController {
      */
     @GetMapping("/menuTree/{userId}")
     public R menuTreeByRole(@PathVariable("userId") String userId) {
+        List<String> roleIds = userService.rolesByUserId(userId);
+        List<Menu> menus = service.listByRole(roleIds);
+
+        return R.ok(menus);
+    }
+
+    /**
+     * 获取角色对应菜单
+     *
+     * @return
+     */
+    @GetMapping("/menuTree")
+    public R menuTree() {
+        // 获取当前用户的userId
+        String userId = JwtUtil.getUserIdByJwt(request);
+
         List<String> roleIds = userService.rolesByUserId(userId);
         List<Menu> menus = service.listByRole(roleIds);
 

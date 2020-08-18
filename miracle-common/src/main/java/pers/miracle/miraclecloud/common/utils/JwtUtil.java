@@ -12,6 +12,8 @@ import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +98,29 @@ public class JwtUtil {
                 .parseClaimsJws(jwt)
                 .getBody();
         return claims;
+    }
+
+    /**
+     * 根据jwt获取当前用户的userId
+     *
+     * @param request
+     * @return
+     */
+    public static String getUserIdByJwt(HttpServletRequest request) {
+        String jwt = request.getHeader("Authorization");
+        log.info("jwt:{}", jwt);
+        // 如果head的Authorization没有则从cookie中取
+        if (StringUtils.isEmpty(jwt)){
+            Cookie[] cookies = request.getCookies();
+            jwt = cookies[0].getValue();
+            log.warn("Authorization中没有得到jwt");
+        }
+        Claims claims = JwtUtil.parseJwt(jwt);
+        if (!claims.containsKey("id")) {
+            return null;
+        }
+
+        return claims.get("id").toString();
     }
 
 

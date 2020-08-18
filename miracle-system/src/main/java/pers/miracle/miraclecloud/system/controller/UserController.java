@@ -1,9 +1,11 @@
 package pers.miracle.miraclecloud.system.controller;
 
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.annotation.Log;
+import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.Md5Util;
 import pers.miracle.miraclecloud.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.service.IUserService;
 import pers.miracle.miraclecloud.system.vo.UserRoleVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +31,10 @@ public class UserController {
     @Autowired
     private IUserService service;
 
+    @Autowired
+    private HttpServletRequest request;
+
+
     /**
      * 登录
      *
@@ -42,8 +49,23 @@ public class UserController {
         // 获取or创建当前用户token
         String token = service.login(user.getUserName(), password);
 
-        return R.ok(token).data("role");
+        return R.ok(token);
     }
+
+    /**
+     * 根据jwt获取用户的角色
+     *
+     * @return
+     */
+    @GetMapping("/getRoles")
+    public R getRoles(){
+        // 获取当前用户的userId
+        String userId = JwtUtil.getUserIdByJwt(request);
+
+        List<String> userIds = service.rolesByUserId(userId);
+        return R.ok(userIds);
+    }
+
 
     /**
      * 查询全部用户

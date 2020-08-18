@@ -21,7 +21,7 @@ public class User {
     /**
      * 密码
      * 序列化时，不显示密码(查询)，可以被反序列化(新增和修改)
-     * @JsonIgnore 过滤掉特定字段不返回或者不解析
+     * @JsonIgnore 过滤掉特定字段不返回或者不解析,即忽略序列化及反序列化，
      * @JsonSerialize(using = NullSerializer.class) 会返回字段但值为null
      */
     @JsonSerialize(using = NullSerializer.class)
