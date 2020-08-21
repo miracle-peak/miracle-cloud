@@ -7,7 +7,7 @@ spring:
     name: miracle-system
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/miracle_clould_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false
+    url: jdbc:mysql://127.0.0.1:3306/miracle_cloud_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false
     username: ENC(GNTGqKTs2Iu5LCeKJMXiYQ==)
     password: ENC(BS8Z50ImQg3pd0yYonKB5Q==)
     driver-class-name: com.mysql.jdbc.Driver

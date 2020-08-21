@@ -49,6 +49,11 @@ public class Menu {
     private String icon;
 
     /**
+     * 是否隐藏菜单 默认显示 0 隐藏 1
+     */
+    private Integer visible;
+
+    /**
      * 子菜单
      */
 //    private List<Menu> children = new ArrayList<Menu>();
@@ -118,6 +123,14 @@ public class Menu {
         this.icon = icon;
     }
 
+    public Integer getVisible() {
+        return visible;
+    }
+
+    public void setVisible(Integer visible) {
+        this.visible = visible;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
@@ -129,6 +142,7 @@ public class Menu {
                 ", path='" + path + '\'' +
                 ", component='" + component + '\'' +
                 ", icon='" + icon + '\'' +
+                ", visible=" + visible +
                 '}';
     }
 }

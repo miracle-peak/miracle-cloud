@@ -95,4 +95,17 @@ public class LoginLog implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "LoginLog{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", ip='" + ip + '\'' +
+                ", loginTime='" + loginTime + '\'' +
+                ", city='" + city + '\'' +
+                ", msg='" + msg + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

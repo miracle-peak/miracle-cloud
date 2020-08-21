@@ -62,7 +62,7 @@ public class IpUtil {
     public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
         // 解析不了ip
-        if (null == addr){
+        if (null == addr) {
             return true;
         }
         return internalIp(addr) || "127.0.0.1".equals(ip);
@@ -107,19 +107,16 @@ public class IpUtil {
         if (IpUtil.internalIp(ip)) {
             return "内网IP";
         }
-
         String rspStr = HttpUtils.sendGet(IP_URL, "ip=" + ip + "&json=true", "GBK");
         if (StringUtils.isEmpty(rspStr)) {
             log.error("获取地理位置异常: {}", ip);
             return address;
         }
 
-
         JSONObject obj = JSONObject.parseObject(rspStr);
         String region = obj.getString("pro");
         String city = obj.getString("city");
         return String.format("%s %s", region, city);
-
     }
 
     /**

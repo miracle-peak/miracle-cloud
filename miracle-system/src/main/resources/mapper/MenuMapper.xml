@@ -4,20 +4,17 @@
     <resultMap id="menuResult" type="Menu">
         <id property="id" column="id"/>
         <result property="menuName" column="menu_name"/>
-        <result property="parentName" column="parent_name"/>
         <result property="parentId" column="parent_id"/>
         <result property="orderNum" column="order_num"/>
         <result property="path" column="path"/>
         <result property="component" column="component"/>
-        <result property="isFrame" column="is_frame"/>
-        <result property="menuType" column="menu_type"/>
         <result property="visible" column="visible"/>
     </resultMap>
 
     <!--不使用select * 效率低-->
     <sql id="menuSelect">
-        select id, menuName, parentName, parentId, orderNum,  path,
-         component, isFrame, menuType, visible
+        select id, menu_name, parent_id,
+        order_num, path, component,  visible, icon
     </sql>
 
     <select id="ListByMenu" parameterType="Menu" resultMap="menuResult">
@@ -33,10 +30,10 @@
         order by parent_id, order_num
     </select>
 
-
-    <select id="listByRole">
-        <include refid="menuSelect"/>
-        select m.* from menu m RIGHT JOIN role_menu rm on m.id = rm.menu_id where
+    <select id="listByRole" resultType="Menu">
+        select distinct id, menu_name, parent_id,
+        order_num, path, component, visible, icon
+        from menu m RIGHT JOIN role_menu rm on m.id = rm.menu_id where
         role_id in
         <foreach collection="roleIds" separator="," open="(" close=")" item="item">#{item}</foreach>
 

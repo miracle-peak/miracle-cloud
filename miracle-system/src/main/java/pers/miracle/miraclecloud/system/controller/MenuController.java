@@ -1,18 +1,15 @@
 package pers.miracle.miraclecloud.system.controller;
 
-import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.R;
 import pers.miracle.miraclecloud.system.entity.Menu;
-import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.service.IMenuService;
 import pers.miracle.miraclecloud.system.service.IUserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author: 蔡奇峰
