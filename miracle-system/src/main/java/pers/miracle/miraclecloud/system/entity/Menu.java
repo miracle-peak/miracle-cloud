@@ -3,6 +3,9 @@ package pers.miracle.miraclecloud.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 菜单
  *
@@ -17,11 +20,6 @@ public class Menu {
      * 菜单名称
      */
     private String menuName;
-
-    /**
-     * 父菜单名称
-     */
-    private String parentName;
 
     /**
      * 父菜单ID
@@ -56,7 +54,7 @@ public class Menu {
     /**
      * 子菜单
      */
-//    private List<Menu> children = new ArrayList<Menu>();
+    private List<Menu> children = new ArrayList<Menu>();
 
 
     public Long getId() {
@@ -73,14 +71,6 @@ public class Menu {
 
     public void setMenuName(String menuName) {
         this.menuName = menuName;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
     }
 
     public Long getParentId() {
@@ -131,18 +121,26 @@ public class Menu {
         this.visible = visible;
     }
 
+    public List<Menu> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Menu> children) {
+        this.children = children;
+    }
+
     @Override
     public String toString() {
         return "Menu{" +
                 "id=" + id +
                 ", menuName='" + menuName + '\'' +
-                ", parentName='" + parentName + '\'' +
                 ", parentId=" + parentId +
                 ", orderNum='" + orderNum + '\'' +
                 ", path='" + path + '\'' +
                 ", component='" + component + '\'' +
                 ", icon='" + icon + '\'' +
                 ", visible=" + visible +
+                ", children=" + children +
                 '}';
     }
 }

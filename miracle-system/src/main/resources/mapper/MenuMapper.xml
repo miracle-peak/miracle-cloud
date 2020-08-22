@@ -34,7 +34,7 @@
         select distinct id, menu_name, parent_id,
         order_num, path, component, visible, icon
         from menu m RIGHT JOIN role_menu rm on m.id = rm.menu_id where
-        role_id in
+        m.visible = '0' and role_id in
         <foreach collection="roleIds" separator="," open="(" close=")" item="item">#{item}</foreach>
 
         order by m.parent_id, m.order_num

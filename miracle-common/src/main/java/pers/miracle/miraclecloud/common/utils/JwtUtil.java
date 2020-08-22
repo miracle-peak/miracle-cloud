@@ -108,12 +108,11 @@ public class JwtUtil {
      */
     public static String getUserIdByJwt(HttpServletRequest request) {
         String jwt = request.getHeader("Authorization");
-        log.info("jwt:{}", jwt);
         // 如果head的Authorization没有则从cookie中取
         if (StringUtils.isEmpty(jwt)){
             Cookie[] cookies = request.getCookies();
             jwt = cookies[0].getValue();
-            log.warn("Authorization中没有得到jwt");
+            log.warn("请求头的Authorization中没有得到jwt");
         }
         Claims claims = JwtUtil.parseJwt(jwt);
         if (!claims.containsKey("id")) {
