@@ -1,5 +1,7 @@
 package pers.miracle.miraclecloud.common.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
 import java.util.Map;
@@ -17,7 +19,8 @@ public class R {
     private int code;
     private boolean success;
     private String message;
-    private Object data;
+    private JSONObject data = new JSONObject();
+    // private Object data;
     // private ConcurrentHashMap<String, Object> data = new ConcurrentHashMap<>();
 
     public static R ok(){
@@ -80,7 +83,7 @@ public class R {
         return this;
     }
 
-    public R data(Object data){
+    public R data(JSONObject data){
         this.data = data;
 
         return this;
@@ -88,6 +91,12 @@ public class R {
 
     public R data(Map<String, Object> data){
         this.setData(data);
+
+        return this;
+    }
+
+    public R data(String key, Object value){
+        this.data.put(key, value);
 
         return this;
     }
@@ -135,6 +144,6 @@ public class R {
     }
 
     public void setData(Object data) {
-        this.data = data;
+         this.data.put(DATA_KEY, data);
     }
 }

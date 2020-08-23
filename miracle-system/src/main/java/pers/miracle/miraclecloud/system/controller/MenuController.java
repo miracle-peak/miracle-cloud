@@ -9,9 +9,7 @@ import pers.miracle.miraclecloud.system.service.IMenuService;
 import pers.miracle.miraclecloud.system.service.IUserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * @author: 蔡奇峰
@@ -45,9 +43,20 @@ public class MenuController {
      * @return
      */
     @PostMapping("/list")
-    public R list(@RequestBody Menu menu) {
+    public R list(@RequestBody(required = false) Menu menu) {
 
         return R.ok(service.ListByMenu(menu));
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param ids
+     * @return
+     */
+    @PostMapping("/delete")
+    public R delete(@RequestBody String[] ids) {
+        return R.ok(service.removeByIds(Arrays.asList(ids)));
     }
 
     /**
@@ -63,13 +72,26 @@ public class MenuController {
 
 
     /**
-     * 获取角色对应菜单
+     * 查询某个角色对应菜单
+     *
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/menuByRole/{roleId}")
+    public R menuTreeByRole(@PathVariable("roleId") String roleId) {
+        List<Menu> menus = service.listByRole(new ArrayList<>(Arrays.asList(roleId)));
+
+        return R.ok(menus);
+    }
+
+    /**
+     * 获取用户对应菜单
      *
      * @param userId
      * @return
      */
     @GetMapping("/menuTree/{userId}")
-    public R menuTreeByRole(@PathVariable("userId") String userId) {
+    public R menuTreeByUser(@PathVariable("userId") String userId) {
         List<String> roleIds = userService.rolesByUserId(userId);
         List<Menu> menus = service.listByRole(roleIds);
 
@@ -91,4 +113,5 @@ public class MenuController {
 
         return R.ok(menus);
     }
+
 }

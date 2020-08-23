@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.vo.RoleMenuVO;
 
+import java.util.List;
+
 /**
  * @author: 蔡奇峰
  * @date: 2020/8/12 下午4:23
@@ -23,6 +25,14 @@ public interface IRoleService extends IService<Role> {
      * @param roleMenuVo
      */
     void updateRole(RoleMenuVO roleMenuVo);
+
+    /**
+     * 获取角色及其菜单
+     *
+     * @param roleId
+     * @return
+     */
+    RoleMenuVO getRole(String roleId);
 
 
     /**

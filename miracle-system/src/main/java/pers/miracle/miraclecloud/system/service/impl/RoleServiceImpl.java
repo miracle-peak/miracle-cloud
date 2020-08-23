@@ -5,11 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.entity.Role;
+import pers.miracle.miraclecloud.system.mapper.MenuMapper;
 import pers.miracle.miraclecloud.system.mapper.RoleMapper;
 import pers.miracle.miraclecloud.system.service.IRoleService;
 import pers.miracle.miraclecloud.system.vo.RoleMenuVO;
+
 import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -20,6 +24,8 @@ import java.util.Arrays;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IRoleService {
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
     /**
      * 添加角色并绑定其菜单
@@ -51,6 +57,27 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         }
 
 
+    }
+
+    /**
+     * 获取角色及其菜单
+     *
+     * @param roleId
+     * @return
+     */
+    @Override
+    public RoleMenuVO getRole(String roleId) {
+        // 查询该角色信息
+        Role role = roleMapper.selectById(roleId);
+        RoleMenuVO roleMenuVO = new RoleMenuVO();
+        roleMenuVO.setName(role.getName());
+        roleMenuVO.setLocked(role.getLocked());
+        roleMenuVO.setRoleId(roleId);
+        // 查询该角色菜单
+        List<Menu> menuList = menuMapper.listByRole(Arrays.asList(roleId));
+        roleMenuVO.setMenus(menuList);
+
+        return roleMenuVO;
     }
 
     /**

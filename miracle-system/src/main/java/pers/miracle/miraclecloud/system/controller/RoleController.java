@@ -47,6 +47,18 @@ public class RoleController {
     }
 
     /**
+     * 获取角色及其菜单
+     *
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/getRole/{roleId}")
+    public R getRole(@PathVariable("roleId") String roleId) {
+
+        return R.ok(service.getRole(roleId));
+    }
+
+    /**
      * 修改角色并更新其菜单
      *
      * @param vo
@@ -65,7 +77,7 @@ public class RoleController {
      * @return
      */
     @PostMapping("/remove")
-    public R remove(@RequestBody String[] roleIds){
+    public R remove(@RequestBody String[] roleIds) {
         service.deleteRole(roleIds);
         return R.ok();
     }

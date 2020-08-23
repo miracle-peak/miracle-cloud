@@ -23,11 +23,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Autowired
     private MenuMapper menuMapper;
 
+    /**
+     * 查询全部菜单
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public List<Menu> ListByMenu(Menu menu) {
-        return menuMapper.ListByMenu(menu);
+        // 构建菜单树
+        List<Menu> menuTree = buildMenuTree(menuMapper.ListByMenu(menu), null);
+        return menuTree;
     }
 
+    /**
+     * 根据角色查询菜单
+     *
+     * @param roleIds
+     * @return
+     */
     @Override
     public List<Menu> listByRole(Collection<String> roleIds) {
         return buildMenuTree(menuMapper.listByRole(roleIds), null);
@@ -35,17 +49,30 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
 
     /**
-     * 构建菜单树
+     * 利用递归构建菜单树
+     * <p>
+     * 不要在 foreach 循环里进行元素的 remove/add 操作,应使用迭代器 Iterator，或者直接使用普通for循环进行操作;
+     * modCount 意为 list 的结构变化次数，而 expectedModCount 可被视为 Iterator 内部记录的集合结构变化次数;
+     * 如果这两个不相等则抛 ConcurrentModificationException 异常，这就是java错误检查机制：fail-fast(快速失败);
+     * foreach 循环其内部实现利用了 Iterator;
+     * <p>
+     * fail-fast， 即快速失败，它是Java集合的一种错误检测机制，
+     * 当多个线程对集合(非fail-safe的集合类)进行结构上的改变的时候，
+     * 有可能会产生fail-fast机制，这个时候就会抛出 ConcurrentModificationException
+     * (当方法检测到对象的并发修改，但不允许这种修改的时候就抛出该异常)。同时需要注意的是，
+     * 即使不是多线程环境，如果单线程违反了规则，同样也会抛出该异常。
      *
-     * @param menuList
-     * @param pId
+     * @param menuList 未构建成树的菜单集合
+     * @param pId      父节点id，调用该方法时，可传入null
      * @return
      */
     public List<Menu> buildMenuTree(List<Menu> menuList, Long pId) {
         // 菜单树
         List<Menu> menuTree = new ArrayList<>();
+
         for (int i = 0; i < menuList.size(); i++) {
             Menu menu = menuList.get(i);
+            // 如果parentId=0即没有父节点
             if (menu.getParentId() == 0) {
                 // 移除父节点避免死循环
                 menuList.remove(i);
