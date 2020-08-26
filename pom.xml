@@ -21,6 +21,8 @@
         <module>miracle-gateway</module>
         <!-- 系统模块-->
         <module>miracle-system</module>
+        <!--限流模块-->
+        <module>miracle-sentinel</module>
     </modules>
 
     <properties>
@@ -33,7 +35,14 @@
             <groupId>pers.miracle.miraclecloud.common</groupId>
             <artifactId>miracle-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>pers.miracle.miraclecloud.sentinel</groupId>
+                    <artifactId>miracle-sentinel</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.utils.R;
+import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.service.IRoleService;
 import pers.miracle.miraclecloud.system.vo.RoleMenuVO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -54,8 +56,26 @@ public class RoleController {
      */
     @GetMapping("/getRole/{roleId}")
     public R getRole(@PathVariable("roleId") String roleId) {
+        RoleMenuVO role = service.getRole(roleId);
+        List<Long> menuIds = new ArrayList<>();
+        for (Menu menu: role.getMenus()) {
+            menuIds.add(menu.getId());
+        }
+        // 菜单列表构建成菜单树
+        role.setMenus(RoleMenuVO.buildMenuTree(role.getMenus(), null));
+        return R.ok(role).data("ids", menuIds);
+    }
 
-        return R.ok(service.getRole(roleId));
+    /**
+     * 更新角色但不修改其菜单
+     *
+     * @param role
+     * @return
+     */
+    @PostMapping("/update")
+    public R update(@RequestBody Role role) {
+        service.updateById(role);
+        return R.ok();
     }
 
     /**
@@ -64,8 +84,8 @@ public class RoleController {
      * @param vo
      * @return
      */
-    @PostMapping("/update")
-    public R update(@RequestBody RoleMenuVO vo) {
+    @PostMapping("/updateVO")
+    public R updateVO(@RequestBody RoleMenuVO vo) {
         service.updateRole(vo);
         return R.ok();
     }
@@ -78,7 +98,7 @@ public class RoleController {
      */
     @PostMapping("/remove")
     public R remove(@RequestBody String[] roleIds) {
-        service.deleteRole(roleIds);
+        service.deleteRoleAndMenu(roleIds);
         return R.ok();
     }
 
@@ -90,7 +110,7 @@ public class RoleController {
      */
     @PostMapping("/delete")
     public R delete(@RequestBody String[] roleIds) {
-        return service.removeByIds(Arrays.asList(roleIds)) ? R.ok() : R.error();
+        return service.deleteRole(roleIds) ? R.ok() : R.error();
     }
 
     /**

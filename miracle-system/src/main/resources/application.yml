@@ -10,7 +10,7 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/miracle_cloud_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false
     username: ENC(GNTGqKTs2Iu5LCeKJMXiYQ==)
     password: ENC(BS8Z50ImQg3pd0yYonKB5Q==)
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       # 连接池中允许的最小连接数。缺省值：10
@@ -52,7 +52,7 @@ mybatis-plus:
 
 jasypt:
   encryptor:
-    # 盐
+    # 密钥
     password: tale666cqf88miracle6TALE_CQF
     #    property:
     # 自定义属性规则，默认前缀是“ENC(”，后缀为“)”

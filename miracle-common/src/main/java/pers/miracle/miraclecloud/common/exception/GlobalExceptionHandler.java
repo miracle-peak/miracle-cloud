@@ -22,7 +22,7 @@ import pers.miracle.miraclecloud.common.utils.R;
  * @author: 蔡奇峰
  * @Version V1.0
  **/
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 其他全局异常在此捕获
+     * 其他异常在此捕获
      * @param e
      * @return
      */

@@ -14,11 +14,12 @@
     <!--不使用select * 效率低-->
     <sql id="menuSelect">
         select id, menu_name, parent_id,
-        order_num, path, component,  visible, icon
+        order_num, path, component,  visible, icon from menu
     </sql>
 
     <select id="ListByMenu" parameterType="Menu" resultMap="menuResult">
         <include refid="menuSelect"/>
+
         <where>
             <if test="menuName != null and menuName != ''">
                 AND menu_name like concat('%', #{menuName}, '%')
@@ -31,7 +32,7 @@
     </select>
 
     <select id="listByRole" resultType="Menu">
-        select distinct id, menu_name, parent_id,
+        select distinct m.id, menu_name, parent_id,
         order_num, path, component, visible, icon
         from menu m RIGHT JOIN role_menu rm on m.id = rm.menu_id where
         m.visible = '0' and role_id in

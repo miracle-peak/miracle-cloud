@@ -48,5 +48,14 @@ public interface IRoleService extends IService<Role> {
      *
      * @param roleIds
      */
-    void deleteRole(String[] roleIds);
+    void deleteRoleAndMenu(String[] roleIds);
+
+
+    /**
+     * 仅删除角色
+     *
+     * @param roleIds
+     * @return
+     */
+    Boolean deleteRole(String[] roleIds);
 }

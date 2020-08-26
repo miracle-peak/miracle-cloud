@@ -29,4 +29,12 @@ public interface RoleMapper extends BaseMapper<Role> {
      * @param roleId
      */
     void clearMenu(@Param("roleId") String roleId);
+
+    /**
+     * 仅删除角色
+     *
+     * @param roleIds
+     * @return
+     */
+    int deleteRole(@Param("roleId") String roleIds);
 }

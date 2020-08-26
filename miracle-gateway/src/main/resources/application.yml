@@ -28,23 +28,6 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 
-    sentinel:
-      transport:
-        dashboard: 127.0.0.1:9670
-        # 客户端监控API的端口
-        port: 8877
-      # 使用nacos持久化sentinel限流规则
-#      datasource:
-#        ds1:
-#          nacos:
-#            server-addr: 127.0.0.1:8848
-#            dataId: miracle-gateway
-#            groupId: DEFAULT_GROUP
-#            data-type: json
-#            rule-type: flow
-
-
-
   #redis 配置
   redis:
     database: 0

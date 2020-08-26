@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author: 蔡奇峰
  * @Version V1.0
  **/
-@RestController
+//@RestController
 public class ExceptionHandlerController implements ErrorController {
 
 

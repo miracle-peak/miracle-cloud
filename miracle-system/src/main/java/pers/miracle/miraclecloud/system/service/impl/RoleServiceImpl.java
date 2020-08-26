@@ -55,8 +55,6 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
         if (!CollectionUtils.isEmpty(roleMenuVo.getMenus())) {
             roleMapper.bindMenu(roleMenuVo.getRoleId(), roleMenuVo.getMenus());
         }
-
-
     }
 
     /**
@@ -68,14 +66,22 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public RoleMenuVO getRole(String roleId) {
         // 查询该角色信息
-        Role role = roleMapper.selectById(roleId);
+        Role role = query().eq("role_id", roleId)
+                .oneOpt()
+                .orElseThrow(() -> new RuntimeException("未查询到该角色!"));
+
+        if (null == role){
+            throw new RuntimeException("未查找到该角色");
+        }
         RoleMenuVO roleMenuVO = new RoleMenuVO();
         roleMenuVO.setName(role.getName());
         roleMenuVO.setLocked(role.getLocked());
         roleMenuVO.setRoleId(roleId);
         // 查询该角色菜单
         List<Menu> menuList = menuMapper.listByRole(Arrays.asList(roleId));
+        // 返回未构建成树的菜单
         roleMenuVO.setMenus(menuList);
+        // roleMenuVO.setMenus(RoleMenuVO.buildMenuTree(menuList, null));
 
         return roleMenuVO;
     }
@@ -98,11 +104,37 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteRole(String[] roleIds) {
-        removeByIds(Arrays.asList(roleIds));
+    public void deleteRoleAndMenu(String[] roleIds) {
+        for (String roleId: roleIds) {
+            int isDelete = roleMapper.deleteRole(roleId);
+            if (isDelete <= 0){
+                throw new RuntimeException("删除失败");
+            }
+        }
+        // TODO 在controller层removeByIds及service层使用deleteBatchIds，删除失败，原因未知
+        // removeByIds(Arrays.asList(roleIds));
 
         for (String id : roleIds) {
             clearMenu(id);
         }
+    }
+
+    /**
+     * 仅删除角色
+     *
+     * @param roleIds
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean deleteRole(String[] roleIds) {
+        for (String roleI: roleIds) {
+            int isDelete = roleMapper.deleteRole(roleI);
+            if (isDelete <= 0){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
