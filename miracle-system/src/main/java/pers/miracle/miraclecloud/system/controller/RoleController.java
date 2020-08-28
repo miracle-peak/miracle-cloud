@@ -1,5 +1,7 @@
 package pers.miracle.miraclecloud.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import pers.miracle.miraclecloud.system.vo.RoleMenuVO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -35,17 +36,30 @@ public class RoleController {
      * @return
      */
     @GetMapping("/list")
-    public R list(Role role) {
-        List<Role> list;
-        if (null == role || StringUtils.isEmpty(role.getLocked())) {
-            list = StringUtils.isEmpty(role.getName()) ?
-                    service.list() : service.query().like("name", role.getName())
-                    .list();
-        } else {
-            list = service.query().eq("locked", role.getLocked())
-                    .list();
+    public R list(Role role, @RequestParam("pageSize") Integer pageSize,
+                  @RequestParam("pageNum") Integer pageNum) {
+
+        Page<Role> rolePage = new Page<Role>().setSize(pageSize).setCurrent(pageNum);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (null != role) {
+            if (StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
+                // 仅根据名称查询
+                queryWrapper.like("name", role.getName());
+
+            } else if (!StringUtils.isEmpty(role.getLocked()) && StringUtils.isEmpty(role.getName())) {
+                // 仅根据是否锁定状态查询
+                queryWrapper.eq("locked", role.getLocked());
+
+            } else if (!StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
+                // 根据名称及是否锁定状态查询
+                queryWrapper.eq("locked", role.getLocked());
+                queryWrapper.like("name", role.getName());
+
+            }
         }
-        return R.ok(list);
+        Page<Role> page = service.page(rolePage, queryWrapper);
+
+        return R.ok(page);
     }
 
     /**
@@ -58,7 +72,7 @@ public class RoleController {
     public R getRole(@PathVariable("roleId") String roleId) {
         RoleMenuVO role = service.getRole(roleId);
         List<Long> menuIds = new ArrayList<>();
-        for (Menu menu: role.getMenus()) {
+        for (Menu menu : role.getMenus()) {
             menuIds.add(menu.getId());
         }
         // 菜单列表构建成菜单树

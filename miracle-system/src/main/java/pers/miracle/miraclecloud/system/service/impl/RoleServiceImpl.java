@@ -1,5 +1,6 @@
 package pers.miracle.miraclecloud.system.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateRole(RoleMenuVO roleMenuVo) {
-        updateById(roleMenuVo);
+        // 传入VO 报错：There is no getter for property named 'null' in （RoleMenuVO）
+        // 但 save(vo); 方法直接传入VO没问题, 需要在实体主键加上@TableId注解
+         updateById(roleMenuVo);
 
         roleMapper.clearMenu(roleMenuVo.getRoleId());
         if (!CollectionUtils.isEmpty(roleMenuVo.getMenus())) {
@@ -70,7 +73,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
                 .oneOpt()
                 .orElseThrow(() -> new RuntimeException("未查询到该角色!"));
 
-        if (null == role){
+        if (null == role) {
             throw new RuntimeException("未查找到该角色");
         }
         RoleMenuVO roleMenuVO = new RoleMenuVO();
@@ -105,9 +108,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteRoleAndMenu(String[] roleIds) {
-        for (String roleId: roleIds) {
+        for (String roleId : roleIds) {
             int isDelete = roleMapper.deleteRole(roleId);
-            if (isDelete <= 0){
+            if (isDelete <= 0) {
                 throw new RuntimeException("删除失败");
             }
         }
@@ -128,13 +131,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteRole(String[] roleIds) {
-        for (String roleI: roleIds) {
+        for (String roleI : roleIds) {
             int isDelete = roleMapper.deleteRole(roleI);
-            if (isDelete <= 0){
+            if (isDelete <= 0) {
                 return false;
             }
         }
 
         return true;
     }
+
 }

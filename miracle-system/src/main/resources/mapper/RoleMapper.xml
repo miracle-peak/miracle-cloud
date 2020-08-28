@@ -8,6 +8,22 @@
         <result column="locked" property="locked"/>
     </resultMap>
 
+    <sql id="roleSelect">
+        select role_id, name, locked from role
+    </sql>
+
+    <select id="listByRole" parameterType="Role" resultMap="roleResult">
+        <include refid="roleSelect"/>
+        <where>
+            <if test="name != null and name != ''">
+                AND name like concat('%', #{name}, '%')
+            </if>
+            <if test="locked != null and locked != ''">
+                AND locked = #{locked}
+            </if>
+        </where>
+    </select>
+
     <insert id="bindMenu">
         insert into role_menu(role_id, menu_id) values
         <foreach collection="menus" item="menu" separator=",">

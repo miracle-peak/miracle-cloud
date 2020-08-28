@@ -22,6 +22,9 @@ public class RoleMenuVO extends Role {
         this.menus = menus;
     }
 
+    public RoleMenuVO() {
+    }
+
     @Override
     public String toString() {
         return "RoleMenuVO{" +

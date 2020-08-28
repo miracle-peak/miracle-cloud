@@ -1,6 +1,8 @@
 package pers.miracle.miraclecloud.system.entity;
 
 
+import com.baomidou.mybatisplus.annotation.TableId;
+
 /**
  * 角色
  *
@@ -8,6 +10,7 @@ package pers.miracle.miraclecloud.system.entity;
  * @date: 2020/8/10 下午3:51
  */
 public class Role {
+    @TableId("role_id")
     private String roleId;
 
     /**
@@ -43,6 +46,7 @@ public class Role {
     public void setLocked(String locked) {
         this.locked = locked;
     }
+
 
 
     @Override

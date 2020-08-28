@@ -1,5 +1,6 @@
 package pers.miracle.miraclecloud.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.NullSerializer;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.std.NullSerializer;
  * @date: 2020/8/10 下午3:44
  */
 public class User {
+    @TableId("user_id")
     private String userId;
 
     /**

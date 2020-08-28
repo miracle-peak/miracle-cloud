@@ -102,6 +102,7 @@ public class JwtUtil {
 
     /**
      * 根据jwt获取当前用户的userId
+     * 前端请求时将jwt放入请求头 Authorization 做为key
      *
      * @param request
      * @return
@@ -111,10 +112,18 @@ public class JwtUtil {
         // 如果head的Authorization没有则从cookie中取
         if (StringUtils.isEmpty(jwt)){
             Cookie[] cookies = request.getCookies();
+            if(cookies.length == 0){
+                throw new RuntimeException("身份过期请重新登录");
+            }
             jwt = cookies[0].getValue();
             log.warn("请求头的Authorization中没有得到jwt");
         }
-        Claims claims = JwtUtil.parseJwt(jwt);
+        Claims claims = null;
+        try {
+            claims = JwtUtil.parseJwt(jwt);
+        }catch (ExpiredJwtException e){
+            throw new RuntimeException("身份过期请重新登录");
+        }
         if (!claims.containsKey("id")) {
             return null;
         }
