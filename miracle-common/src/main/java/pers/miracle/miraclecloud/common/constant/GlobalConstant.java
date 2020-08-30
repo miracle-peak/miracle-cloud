@@ -12,6 +12,11 @@ public interface GlobalConstant {
      */
     String SALT = "miracle_salt";
 
+    /**
+     * jwt解密后claims的唯一标识
+     */
+    String JWT_ID = "id";
+
 
     /**
      * jwt秘钥

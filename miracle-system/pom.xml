@@ -94,6 +94,12 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
+        <!--包含了sleuth+zipkin-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!--<dependency>
             <groupId>pers.miracle.miraclecloud.sentinel</groupId>
             <artifactId>miracle-sentinel</artifactId>

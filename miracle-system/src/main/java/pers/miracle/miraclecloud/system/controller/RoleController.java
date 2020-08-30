@@ -57,9 +57,8 @@ public class RoleController {
 
             }
         }
-        Page<Role> page = service.page(rolePage, queryWrapper);
 
-        return R.ok(page);
+        return R.ok(service.page(rolePage, queryWrapper));
     }
 
     /**

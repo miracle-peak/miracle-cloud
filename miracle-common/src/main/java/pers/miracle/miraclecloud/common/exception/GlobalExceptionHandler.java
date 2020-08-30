@@ -22,7 +22,7 @@ import pers.miracle.miraclecloud.common.utils.R;
  * @author: 蔡奇峰
  * @Version V1.0
  **/
-//@RestControllerAdvice
+@RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 

@@ -4,6 +4,7 @@ package pers.miracle.miraclecloud.common.utils;
 import com.alibaba.fastjson.JSONObject;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
 import java.util.Map;
@@ -23,7 +24,11 @@ public class R {
     private int code;
     private boolean success;
     private String message;
+    /**
+     * TODO 阿里的fastjson要慎用
+     */
     private JSONObject data = new JSONObject();
+
     private Long total;
     private Long pageSize;
     private Long currentPage;
@@ -138,7 +143,7 @@ public class R {
     }
 
 
-    // setter getter
+    // setter getter 不推荐使用lombok虽然方便
 
     public int getCode() {
         return code;

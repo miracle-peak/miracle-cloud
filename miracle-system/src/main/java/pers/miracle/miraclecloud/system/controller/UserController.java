@@ -56,7 +56,7 @@ public class UserController {
      *
      * @return
      */
-//    @SentinelResource(value = "sentinelFall", fallback = "dealException")
+    // @SentinelResource(value = "sentinelFall", fallback = "dealException")
     @GetMapping("/getRoles")
     public R getRoles(){
         // 获取当前用户的userId

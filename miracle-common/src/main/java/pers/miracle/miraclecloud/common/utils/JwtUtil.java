@@ -7,6 +7,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
@@ -111,12 +112,14 @@ public class JwtUtil {
         String jwt = request.getHeader("Authorization");
         // 如果head的Authorization没有则从cookie中取
         if (StringUtils.isEmpty(jwt)){
-            Cookie[] cookies = request.getCookies();
-            if(cookies.length == 0){
-                throw new RuntimeException("身份过期请重新登录");
-            }
-            jwt = cookies[0].getValue();
             log.warn("请求头的Authorization中没有得到jwt");
+            // TODO 如果加上从cookie中获取jwt,在当前浏览器发送任何请求都会带上cookie即不能防止CSRF攻击
+            // TODO 前端使用代理且本地保存了cookie
+//            Cookie[] cookies = request.getCookies();
+//            if(cookies.length == 0){
+            throw new RuntimeException("身份过期请重新登录");
+//            }
+//            jwt = cookies[0].getValue();
         }
         Claims claims = null;
         try {
@@ -124,11 +127,12 @@ public class JwtUtil {
         }catch (ExpiredJwtException e){
             throw new RuntimeException("身份过期请重新登录");
         }
-        if (!claims.containsKey("id")) {
-            return null;
+        if (!claims.containsKey(GlobalConstant.JWT_ID)) {
+            log.error("没有 userId对应的key应该是伪造的jwt");
+            throw new RuntimeException("对不起！您的token不可用");
         }
 
-        return claims.get("id").toString();
+        return claims.get(GlobalConstant.JWT_ID).toString();
     }
 
 
