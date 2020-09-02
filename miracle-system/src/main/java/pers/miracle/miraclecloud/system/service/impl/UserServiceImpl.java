@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static pers.miracle.miraclecloud.common.constant.GlobalConstant.USER_KEY_PREFIX;
+
 /**
  * @author: 蔡奇峰
  * @date: 2020/8/10 下午5:02
@@ -49,22 +51,22 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         User user = mapper.getOne(userName, password);
         if (null != user) {
-            String token = redisUtil.getStr(user.getUserId() + "");
+            String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId() );
 
             // 不存在这个token 即第一次登录或者过期删除
             if (StringUtils.isEmpty(token)) {
                 // 保证redis和jwt设置过期时间相同
                 Calendar calendar = Calendar.getInstance();
                 // 设置过期时间
-                calendar.add(Calendar.HOUR, 24 * 1);
+                calendar.add(Calendar.HOUR, 24 * 6);
                 // 过期时间
                 Date expireTime = calendar.getTime();
-                // 获取过期时间的时间戳, 使用同一个 expireTime 保证 jwt 和 redis key过期时间一致
+                // 获取过期时间的时间戳单位为毫秒, 使用同一个 expireTime 保证 jwt 和 redis key过期时间一致
                 long time = expireTime.getTime() - System.currentTimeMillis();
                 // 创建jwt
                 token = JwtUtil.createToken(user.getUserId(), user.getUserName(), expireTime);
                 // 存jwt到redis过期时间6天
-                redisUtil.setToken(user.getUserId() + "", token, time);
+                redisUtil.setToken(USER_KEY_PREFIX + user.getUserId() + "", token, time );
             }
 
             return token;

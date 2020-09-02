@@ -37,7 +37,7 @@ public class JwtUtil {
     public static String createToken(String id, String userName, Date expireTime) {
         Map<String, Object> info = new HashMap<>(6);
 
-        info.put("id", id);
+        info.put(GlobalConstant.JWT_ID, id);
         info.put("userName", userName);
 
         SecretKey key = getSecret();
@@ -117,7 +117,7 @@ public class JwtUtil {
             // TODO 前端使用代理且本地保存了cookie
 //            Cookie[] cookies = request.getCookies();
 //            if(cookies.length == 0){
-            throw new RuntimeException("身份过期请重新登录");
+            throw new RuntimeException("身份过期请重新登录,请重新登录");
 //            }
 //            jwt = cookies[0].getValue();
         }
@@ -125,7 +125,7 @@ public class JwtUtil {
         try {
             claims = JwtUtil.parseJwt(jwt);
         }catch (ExpiredJwtException e){
-            throw new RuntimeException("身份过期请重新登录");
+            throw new RuntimeException("身份认证过期请重新登录");
         }
         if (!claims.containsKey(GlobalConstant.JWT_ID)) {
             log.error("没有 userId对应的key应该是伪造的jwt");

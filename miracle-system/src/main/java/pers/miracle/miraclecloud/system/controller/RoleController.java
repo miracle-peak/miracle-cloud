@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import pers.miracle.miraclecloud.common.utils.PageInfo;
 import pers.miracle.miraclecloud.common.utils.R;
 import pers.miracle.miraclecloud.system.entity.Menu;
 import pers.miracle.miraclecloud.system.entity.Role;
@@ -57,8 +58,12 @@ public class RoleController {
 
             }
         }
+        Page page = service.page(rolePage, queryWrapper);
 
-        return R.ok(service.page(rolePage, queryWrapper));
+        PageInfo pageInfo = new PageInfo(page.getTotal(), page.getSize(),
+                page.getCurrent(), page.getRecords());
+
+        return R.ok(pageInfo);
     }
 
     /**

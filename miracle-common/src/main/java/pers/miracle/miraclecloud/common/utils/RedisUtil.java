@@ -48,7 +48,7 @@ public class RedisUtil {
      */
     public boolean setToken(String key, Object value, long expireTime) {
         try {
-            redisTemplate.opsForValue().set(key, value, expireTime, TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(key, value, expireTime, TimeUnit.MILLISECONDS);
 
         }catch (Exception e){
             logger.error("存储token失败:{}", e.getMessage());

@@ -15,7 +15,12 @@ public interface GlobalConstant {
     /**
      * jwt解密后claims的唯一标识
      */
-    String JWT_ID = "id";
+    String JWT_ID = "miracle_id";
+
+    /**
+     * redis存储用户jwt 的 key前缀 方便批量删除和查询
+     */
+    String USER_KEY_PREFIX = "user-";
 
 
     /**

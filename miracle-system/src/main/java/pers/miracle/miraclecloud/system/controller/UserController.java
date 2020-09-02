@@ -1,5 +1,6 @@
 package pers.miracle.miraclecloud.system.controller;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -73,10 +74,17 @@ public class UserController {
      * @return
      */
     @GetMapping("/list")
-    public R list(User user) {
-        List<User> list = service.listByUser(user);
+    public R list(User user, @RequestParam("pageSize") Integer pageSize,
+                  @RequestParam("pageNum") Integer pageNum) {
 
+        List<User> list = service.listByUser(user);
         return R.ok(list);
+    }
+
+    @GetMapping("/getUser/{userId}")
+    public R getUser(@PathVariable("userId") String userId){
+
+        return R.ok(service.getById(userId));
     }
 
     /**

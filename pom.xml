@@ -22,7 +22,7 @@
         <!-- 系统模块-->
         <module>miracle-system</module>
         <!--限流模块-->
-        <module>miracle-sentinel</module>
+<!--        <module>miracle-sentinel</module>-->
     </modules>
 
     <properties>
@@ -30,19 +30,6 @@
     </properties>
 
     <dependencies>
-        <!--引入公共模块-->
-        <dependency>
-            <groupId>pers.miracle.miraclecloud.common</groupId>
-            <artifactId>miracle-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>pers.miracle.miraclecloud.sentinel</groupId>
-                    <artifactId>miracle-sentinel</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -64,6 +51,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--引入公共模块-->
+            <dependency>
+                <groupId>pers.miracle.miraclecloud.common</groupId>
+                <artifactId>miracle-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>pers.miracle.miraclecloud.sentinel</groupId>
+                        <artifactId>miracle-sentinel</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
             <!--spring cloud Hoxton.SR1-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

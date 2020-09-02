@@ -3,8 +3,7 @@ package pers.miracle.miraclecloud.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+//import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 
 import java.util.Map;
@@ -60,15 +59,15 @@ public class R {
      * @param page
      * @return
      */
-    public static R ok(Page page) {
+    public static R ok(PageInfo page) {
         R r = new R();
         r.setMessage("操作成功");
         r.setCode(GlobalConstant.SUCCESS);
         r.setSuccess(true);
-        r.setData(page.getRecords());
+        r.setData(page.getRows());
         r.setTotal(page.getTotal());
-        r.setPageSize(page.getSize());
-        r.setCurrentPage(page.getCurrent());
+        r.setPageSize(page.getPageSize());
+        r.setCurrentPage(page.getCurrentPage());
 
         return r;
     }
