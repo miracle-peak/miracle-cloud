@@ -59,7 +59,7 @@ public class UserController {
      */
     // @SentinelResource(value = "sentinelFall", fallback = "dealException")
     @GetMapping("/getRoles")
-    public R getRoles(){
+    public R getRoles() {
         // 获取当前用户的userId
         String userId = JwtUtil.getUserIdByJwt(request);
 
@@ -81,10 +81,16 @@ public class UserController {
         return R.ok(list);
     }
 
+    /**
+     * 查询用户信息及其角色
+     *
+     * @param userId
+     * @return
+     */
     @GetMapping("/getUser/{userId}")
-    public R getUser(@PathVariable("userId") String userId){
+    public R getUser(@PathVariable("userId") String userId) {
 
-        return R.ok(service.getById(userId));
+        return R.ok(service.getById(userId)).data("roleIds", service.rolesByUserId(userId));
     }
 
     /**
@@ -95,6 +101,7 @@ public class UserController {
      */
     @PostMapping("/update")
     public R update(@RequestBody UserRoleVO vo) {
+        System.out.println("vo:" + vo.toString());
         service.updateRole(vo);
         return R.ok();
     }
@@ -141,6 +148,7 @@ public class UserController {
      */
     @PostMapping("/add")
     public R add(@RequestBody UserRoleVO user) {
+        System.out.println("user===>" + user.toString());
         // 密码加盐加密
         String password = Md5Util.saltEncryption(user.getPassword());
         user.setPassword(password);
@@ -149,7 +157,7 @@ public class UserController {
         Integer num = new Random().nextInt(99999);
         String id = time + "-" + (System.currentTimeMillis() + "").substring(7) + num;
         user.setUserId(id);
-
+        System.out.println("user->" + user.toString());
         service.addUser(user);
         return R.ok();
     }

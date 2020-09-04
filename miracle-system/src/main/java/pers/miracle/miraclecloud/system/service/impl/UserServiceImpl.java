@@ -7,7 +7,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.RedisUtil;
-import pers.miracle.miraclecloud.system.entity.Role;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.mapper.UserMapper;
 import pers.miracle.miraclecloud.system.service.IUserService;
@@ -51,22 +50,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         User user = mapper.getOne(userName, password);
         if (null != user) {
-            String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId() );
+            String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId());
 
             // 不存在这个token 即第一次登录或者过期删除
             if (StringUtils.isEmpty(token)) {
                 // 保证redis和jwt设置过期时间相同
                 Calendar calendar = Calendar.getInstance();
-                // 设置过期时间
+                // 设置过期时间6天
                 calendar.add(Calendar.HOUR, 24 * 6);
                 // 过期时间
                 Date expireTime = calendar.getTime();
                 // 获取过期时间的时间戳单位为毫秒, 使用同一个 expireTime 保证 jwt 和 redis key过期时间一致
                 long time = expireTime.getTime() - System.currentTimeMillis();
                 // 创建jwt
-                token = JwtUtil.createToken(user.getUserId(), user.getUserName(), expireTime);
+                token = JwtUtil.createJwt(user.getUserId(), user.getUserName(), expireTime);
                 // 存jwt到redis过期时间6天
-                redisUtil.setToken(USER_KEY_PREFIX + user.getUserId() + "", token, time );
+                redisUtil.setToken(USER_KEY_PREFIX + user.getUserId(), token, time);
+
             }
 
             return token;

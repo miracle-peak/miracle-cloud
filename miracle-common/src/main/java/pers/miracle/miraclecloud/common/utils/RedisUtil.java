@@ -44,7 +44,7 @@ public class RedisUtil {
      *
      * @param key
      * @param value
-     * @param expireTime 过期时间 单位秒
+     * @param expireTime 过期时间 单位毫秒
      */
     public boolean setToken(String key, Object value, long expireTime) {
         try {

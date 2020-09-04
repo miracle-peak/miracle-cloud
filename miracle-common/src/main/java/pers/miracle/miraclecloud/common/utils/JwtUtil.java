@@ -34,7 +34,7 @@ public class JwtUtil {
      * @param expireTime
      * @return
      */
-    public static String createToken(String id, String userName, Date expireTime) {
+    public static String createJwt(String id, String userName, Date expireTime) {
         Map<String, Object> info = new HashMap<>(6);
 
         info.put(GlobalConstant.JWT_ID, id);

@@ -1,0 +1,4 @@
+INSERT INTO miracle_cloud_db.user (user_id, user_name, password, mail, locked) VALUES ('1', 'miracle', '2862f3e225757562120bac862f579eb0', '1748672727@qq.com', '0');
+INSERT INTO miracle_cloud_db.user (user_id, user_name, password, mail, locked) VALUES ('2', 'test', '2862f3e225757562120bac862f579eb0', 'test@qq.com', '0');
+INSERT INTO miracle_cloud_db.user (user_id, user_name, password, mail, locked) VALUES ('2020-08-1106032963123', 'miracle', 'ac09d50d6833c2b66b5981dac537e364', '1748672727@qq.com', '0');
+INSERT INTO miracle_cloud_db.user (user_id, user_name, password, mail, locked) VALUES ('2020-09-03-79040823783', '1', '2862f3e225757562120bac862f579eb0', '1@qq.com', '0');

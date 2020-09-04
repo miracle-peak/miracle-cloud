@@ -21,6 +21,13 @@ public class UserRoleVO extends User {
         this.roles = roles;
     }
 
+    public UserRoleVO() {
+    }
+
+    public UserRoleVO(String userId, String userName, String mail, String locked) {
+        super(userId, userName, mail, locked);
+    }
+
     @Override
     public String toString() {
         return "UserRoleVO{" +

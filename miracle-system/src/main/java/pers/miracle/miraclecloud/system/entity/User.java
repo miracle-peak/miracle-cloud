@@ -79,6 +79,16 @@ public class User {
         this.locked = locked;
     }
 
+    public User() {
+    }
+
+    public User(String userId, String userName, String mail, String locked) {
+        this.userId = userId;
+        this.userName = userName;
+        this.mail = mail;
+        this.locked = locked;
+    }
+
     @Override
     public String toString() {
         return "User{" +

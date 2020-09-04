@@ -31,16 +31,15 @@ public class RoleController {
     private IRoleService service;
 
     /**
-     * 查询角色
+     * 查询角色可根据条件（分页）查询 or 全部（分页）查询
      *
      * @param role
      * @return
      */
     @GetMapping("/list")
-    public R list(Role role, @RequestParam("pageSize") Integer pageSize,
-                  @RequestParam("pageNum") Integer pageNum) {
+    public R list(Role role, @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                  @RequestParam(value = "pageNum", required = false) Integer pageNum) {
 
-        Page<Role> rolePage = new Page<Role>().setSize(pageSize).setCurrent(pageNum);
         QueryWrapper queryWrapper = new QueryWrapper();
         if (null != role) {
             if (StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
@@ -58,12 +57,17 @@ public class RoleController {
 
             }
         }
-        Page page = service.page(rolePage, queryWrapper);
+        if (StringUtils.isEmpty(pageSize) || StringUtils.isEmpty(pageNum)){
+            return R.ok(service.list());
+        }else {
+            Page<Role> rolePage = new Page<Role>().setSize(pageSize).setCurrent(pageNum);
+            Page page = service.page(rolePage, queryWrapper);
 
-        PageInfo pageInfo = new PageInfo(page.getTotal(), page.getSize(),
-                page.getCurrent(), page.getRecords());
+            PageInfo pageInfo = new PageInfo(page.getTotal(), page.getSize(),
+                    page.getCurrent(), page.getRecords());
 
-        return R.ok(pageInfo);
+            return R.ok(pageInfo);
+        }
     }
 
     /**

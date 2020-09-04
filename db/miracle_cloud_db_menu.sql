@@ -1,0 +1,4 @@
+INSERT INTO miracle_cloud_db.menu (id, menu_name, parent_id, order_num, path, component, icon, visible) VALUES (1, '系统管理', 0, 1, '/system', 'Home', 'system', 0);
+INSERT INTO miracle_cloud_db.menu (id, menu_name, parent_id, order_num, path, component, icon, visible) VALUES (2, '用户管理', 1, 0, '/user', 'system/user/index', 'user', 0);
+INSERT INTO miracle_cloud_db.menu (id, menu_name, parent_id, order_num, path, component, icon, visible) VALUES (3, '角色管理', 1, 1, '/role', 'system/role/index', 'peoples', 0);
+INSERT INTO miracle_cloud_db.menu (id, menu_name, parent_id, order_num, path, component, icon, visible) VALUES (4, '菜单管理', 1, 2, '/menu', 'system/menu/index', 'tree-table', 0);
