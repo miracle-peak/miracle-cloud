@@ -40,7 +40,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.17</version>
-            <!--            <version>5.1.13</version>-->
+            <!-- <version>5.1.13</version>-->
             <scope>runtime</scope>
         </dependency>
 
@@ -99,6 +99,16 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+
+<dependency>
+    <groupId>com.alibaba.cloud</groupId>
+    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+</dependency>
+<!-- nacos做sentinel流控等规则的持久化 用-->
+<dependency>
+    <groupId>com.alibaba.csp</groupId>
+    <artifactId>sentinel-datasource-nacos</artifactId>
+</dependency>
 
         <!--包含了sleuth+zipkin-->
         <dependency>

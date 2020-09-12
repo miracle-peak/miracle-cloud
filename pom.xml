@@ -15,7 +15,7 @@
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <!-- 公共模块-->
+        <!-- 公共模块包含 zipkin 链路跟踪-->
         <module>miracle-common</module>
         <!-- 路由模块-->
         <module>miracle-gateway</module>

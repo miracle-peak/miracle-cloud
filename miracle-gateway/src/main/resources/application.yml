@@ -28,6 +28,8 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 
+
+
   #redis 配置
   redis:
     database: 0
@@ -42,12 +44,6 @@ spring:
         max-wait: -1ms  #最大建立连接等待时间。如果超过此时间将接到异常。设为-1表示无限制。
         min-idle: 0     #最小等待连接中的数量,设 0 为没有限制
 #        shutdown-timeout: 400ms
-
-
-# 全局异常处理：抛出后会被GlobalExceptionHandler.class处理
-#mvc:
-#  #出现错误时, 直接抛出异常
-#  throw-exception-if-no-handler-found: true
 
 management:
   endpoints:

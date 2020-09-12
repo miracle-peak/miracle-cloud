@@ -26,7 +26,7 @@ import java.util.Random;
 @RestController
 @RequestMapping("/system/user")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(User.class);
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private IUserService service;
@@ -148,16 +148,13 @@ public class UserController {
      */
     @PostMapping("/add")
     public R add(@RequestBody UserRoleVO user) {
-        System.out.println("user===>" + user.toString());
         // 密码加盐加密
-        String password = Md5Util.saltEncryption(user.getPassword());
-        user.setPassword(password);
+        user.setPassword(Md5Util.saltEncryption(user.getPassword()));
         // 生成用户唯一id,并发大的时候可能重复, 可用IdUtil.simpleUUID()替代 博主简化处理在不创建creat_time字段,还可以知道时间
         LocalDate time = LocalDate.now();
         Integer num = new Random().nextInt(99999);
         String id = time + "-" + (System.currentTimeMillis() + "").substring(7) + num;
         user.setUserId(id);
-        System.out.println("user->" + user.toString());
         service.addUser(user);
         return R.ok();
     }

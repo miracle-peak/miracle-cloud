@@ -15,11 +15,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 import pers.miracle.miraclecloud.common.utils.IpUtil;
 import pers.miracle.miraclecloud.common.utils.R;
 import pers.miracle.miraclecloud.system.entity.LoginLog;
 import pers.miracle.miraclecloud.system.entity.User;
 import pers.miracle.miraclecloud.system.mapper.LoginLogMapper;
+
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
@@ -66,23 +68,22 @@ public class RecordLog {
     }
 
     /**
-      * 异常返回通知，用于拦截异常日志信息 连接点抛出异常后执行
-      *
-      * @param joinPoint 切入点
-      * @param e         异常信息
-      */
+     * 异常返回通知，用于拦截异常日志信息 连接点抛出异常后执行
+     *
+     * @param joinPoint 切入点
+     * @param e         异常信息
+     */
     @AfterThrowing(pointcut = "saveLog()", throwing = "e")
     public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
         // 获取RequestAttributes
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         // 从获取RequestAttributes中获取HttpServletRequest的信息
         HttpServletRequest request = (HttpServletRequest) requestAttributes
-             .resolveReference(RequestAttributes.REFERENCE_REQUEST);
+                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
 
         String msg = e.getMessage();
         deal(joinPoint, request, msg, e);
     }
-
 
 
     /**
@@ -90,15 +91,15 @@ public class RecordLog {
      */
     public void saveLogin(String ip, String msg, String status, Object[] args) {
         User user = null;
+        LoginLog loginLog = new LoginLog();
         if (args[0] instanceof User) {
             user = (User) args[0];
+            loginLog.setUserName(user.getUserName());
         }
         // 设置时区
         LocalDateTime time = LocalDateTime.now(ZoneId.of("UTC+8"));
 
-        LoginLog loginLog = new LoginLog();
         loginLog.setIp(ip);
-        loginLog.setUserName(user.getUserName());
         loginLog.setLoginTime(time + "");
         loginLog.setCity(IpUtil.getCityInfo(ip));
         loginLog.setMsg(msg);
@@ -109,13 +110,14 @@ public class RecordLog {
 
 
     /**
+     * 处理日志
      *
      * @param joinPoint
      * @param request
      * @param msg
      * @param e
      */
-    public void deal(JoinPoint joinPoint, HttpServletRequest request, String msg, Throwable e){
+    public void deal(JoinPoint joinPoint, HttpServletRequest request, String msg, Throwable e) {
         // 获取参数
         Object[] args = joinPoint.getArgs();
         // 从切面织入点处通过反射机制获取织入点处的方法
@@ -124,7 +126,10 @@ public class RecordLog {
         Method method = signature.getMethod();
 
         String ip = IpUtil.getIpAddress(request);
-        if (!StringUtils.isEmpty(method.getName()) && method.getName().equals("login")) {
+        // 请求的是登录
+        if (!StringUtils.isEmpty(method.getName()) &&
+                GlobalConstant.LOGIN_METHOD.equals(method.getName())) {
+            // null无异常则为成功 "0"
             String status = null == e ? "0" : "1";
             // 保存登录记录
             saveLogin(ip, msg, status, args);

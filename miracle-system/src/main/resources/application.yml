@@ -6,12 +6,14 @@ spring:
   application:
     name: miracle-system
 
-  zipkin:
-    base-url: http://localhost:9411
-  sleuth:
-    sampler:
-    #采样率值介于 0 到 1 之间，默认为0, 1 则表示全部采集,但是会降低接口调用效率:
-    probability: 1
+#  zipkin:
+#    base-url: http://localhost:9411
+#  sleuth:
+#    sampler:
+#      #采样率值介于 0 到 1 之间，默认为0, 1 则表示全部采集,但是会降低接口调用效率:
+#      probability: 1
+#      #为了使用速率限制采样器，以选择每秒间隔 接受的trace量，最小数字为0，最大值为2,147,483,647
+#      rate: 10000
 
 
 
@@ -33,6 +35,23 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    # sentinel 限流
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:9670
+        # 客户端监控API的端口
+        port: 8877
+#      # 使用nacos持久化sentinel限流规则
+#      datasource:
+#        ds1:
+#          nacos:
+#            server-addr: 127.0.0.1:8848
+#            dataId: miracle-sentinel
+#            groupId: DEFAULT_GROUP
+#            data-type: json
+#            rule-type: flow
+
+
 
   redis:
     database: 0

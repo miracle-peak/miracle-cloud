@@ -19,11 +19,13 @@
 
     <dependencies>
         <!--因为gateway用的是webflex，会和web包中有冲突-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>2.2.0.RELEASE</version>
-        </dependency>
+        </dependency>-->
+
+        <!-- gateway 中自带webflex，会和web包冲突-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
@@ -43,14 +45,8 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-        <!-- nacos做sentinel流控等规则的持久化 用-->
-        <!--<dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>-->
-
         <!-- nacos-client1.0.0版本有bug:nacos-discovery失败,故将版本降低到0.9.x -->
-        <!--<dependency>
+       <!-- <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
             <version>0.9.1</version>

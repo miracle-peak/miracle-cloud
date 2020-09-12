@@ -22,6 +22,10 @@ public interface GlobalConstant {
      */
     String USER_KEY_PREFIX = "user-";
 
+    /**
+     * 登录方法名
+     */
+    String LOGIN_METHOD = "login";
 
     /**
      * jwt秘钥
