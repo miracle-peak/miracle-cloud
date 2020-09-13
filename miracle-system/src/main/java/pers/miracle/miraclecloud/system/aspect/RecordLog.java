@@ -35,9 +35,10 @@ import java.time.ZoneId;
 @Component
 public class RecordLog {
     private static final Logger log = LoggerFactory.getLogger(RecordLog.class);
-
     @Autowired
     private LoginLogMapper loginLogMapper;
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * 切入点,使用注解@Log的方法则保存日志
@@ -61,10 +62,8 @@ public class RecordLog {
             // isSuccess = r.isSuccess();
             msg = r.getMessage();
         }
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-                .getRequestAttributes()).getRequest();
 
-        deal(joinPoint, request, msg, null);
+        deal(joinPoint, msg, null);
     }
 
     /**
@@ -75,14 +74,7 @@ public class RecordLog {
      */
     @AfterThrowing(pointcut = "saveLog()", throwing = "e")
     public void saveExceptionLog(JoinPoint joinPoint, Throwable e) {
-        // 获取RequestAttributes
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        // 从获取RequestAttributes中获取HttpServletRequest的信息
-        HttpServletRequest request = (HttpServletRequest) requestAttributes
-                .resolveReference(RequestAttributes.REFERENCE_REQUEST);
-
-        String msg = e.getMessage();
-        deal(joinPoint, request, msg, e);
+        deal(joinPoint, e.getMessage(), e);
     }
 
 
@@ -113,11 +105,10 @@ public class RecordLog {
      * 处理日志
      *
      * @param joinPoint
-     * @param request
      * @param msg
      * @param e
      */
-    public void deal(JoinPoint joinPoint, HttpServletRequest request, String msg, Throwable e) {
+    public void deal(JoinPoint joinPoint, String msg, Throwable e) {
         // 获取参数
         Object[] args = joinPoint.getArgs();
         // 从切面织入点处通过反射机制获取织入点处的方法

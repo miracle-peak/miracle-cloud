@@ -100,15 +100,15 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
-<dependency>
-    <groupId>com.alibaba.cloud</groupId>
-    <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-</dependency>
-<!-- nacos做sentinel流控等规则的持久化 用-->
-<dependency>
-    <groupId>com.alibaba.csp</groupId>
-    <artifactId>sentinel-datasource-nacos</artifactId>
-</dependency>
+        <!--<dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+        </dependency>
+        &lt;!&ndash; nacos做sentinel流控等规则的持久化 用&ndash;&gt;
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-datasource-nacos</artifactId>
+        </dependency>-->
 
         <!--包含了sleuth+zipkin-->
         <dependency>
