@@ -20,10 +20,9 @@ spring:
           # 开启从注册中心动态创建路由的功能，利用微服务名称进行路由
           enabled: true
       routes:
-        - id: ribbon
-          uri: lb://miracle-ribbon
-#          uri: http://localhost:8888
-          predicates:
+#        - id: ribbon
+#          uri: lb://miracle-ribbon
+#          predicates:
             - Path=/**
         # 路由的id,没有规定规则但要求唯一,建议配合服务名
         - id: system
