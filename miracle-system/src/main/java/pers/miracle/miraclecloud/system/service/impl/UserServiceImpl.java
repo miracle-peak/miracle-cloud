@@ -50,6 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         User user = mapper.getOne(userName, password);
         if (null != user) {
+            // 使用布隆过滤器 String token = redisUtil.getByBloomFilter("bloom-" + user.getUserId());
             String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId());
 
             // 不存在这个token 即第一次登录或者过期删除
@@ -64,6 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 long time = expireTime.getTime() - System.currentTimeMillis();
                 // 创建jwt
                 token = JwtUtil.createJwt(user.getUserId(), user.getUserName(), expireTime);
+                // 使用布隆过滤器 redisUtil.setByBloomFilter("bloom-" + user.getUserId(), token);
                 // 存jwt到redis过期时间6天
                 redisUtil.setToken(USER_KEY_PREFIX + user.getUserId(), token, time);
 

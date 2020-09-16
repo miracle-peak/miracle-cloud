@@ -31,7 +31,10 @@ public interface GlobalConstant {
      * jwt秘钥
      */
     String SECRET = "miracle_jwt";
-
+    /**
+     * 请求头key 对应jwt
+     */
+    String HEADER_JWT = "Authorization";
     /**
      * 操作成功
      */

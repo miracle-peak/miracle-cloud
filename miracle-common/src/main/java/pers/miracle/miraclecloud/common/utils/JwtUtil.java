@@ -109,7 +109,7 @@ public class JwtUtil {
      * @return
      */
     public static String getUserIdByJwt(HttpServletRequest request) {
-        String jwt = request.getHeader("Authorization");
+        String jwt = request.getHeader(GlobalConstant.HEADER_JWT);
         // 如果head的Authorization没有则从cookie中取
         if (StringUtils.isEmpty(jwt)){
             log.warn("请求头的Authorization中没有得到jwt");
@@ -117,7 +117,7 @@ public class JwtUtil {
             // TODO 前端使用代理且本地保存了cookie
 //            Cookie[] cookies = request.getCookies();
 //            if(cookies.length == 0){
-            throw new RuntimeException("身份过期请重新登录,请重新登录");
+            throw new RuntimeException("获取不到您的身份或身份认证过期,请重新登录");
 //            }
 //            jwt = cookies[0].getValue();
         }

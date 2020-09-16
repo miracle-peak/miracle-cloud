@@ -22,6 +22,13 @@ public class RedisUtil {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    RedisBloomFilter redisBloomFilter;
+
+    @Autowired
+    private BloomFilterHelper bloomFilterHelper;
+
+
 
     /**
      * 缓存基本的对象，Integer、String、实体类等
@@ -95,6 +102,16 @@ public class RedisUtil {
 
     }
 
+    public String getByBloomFilter(String key){
+        boolean bloom = redisBloomFilter.includeByBloomFilter(bloomFilterHelper, "bloom", key);
+
+        if (bloom){
+            return getStr(key);
+        }
+        logger.warn("布隆过滤器中没有这个值");
+        return "";
+    }
+
     /**
      *
      * @param key
@@ -112,6 +129,23 @@ public class RedisUtil {
             return false;
         }
     }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @return
+     */
+    public boolean setByBloomFilter(String key, String value){
+        try {
+            redisBloomFilter.addByBloomFilter(bloomFilterHelper, "bloom", value);
+        }catch (Exception e){
+            logger.error("布隆过滤器添加失败");
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * 删除key

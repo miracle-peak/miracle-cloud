@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.annotation.Log;
+import pers.miracle.miraclecloud.common.annotation.VisitLimit;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.Md5Util;
 import pers.miracle.miraclecloud.common.utils.R;
@@ -37,11 +38,13 @@ public class UserController {
 
     /**
      * 登录
+     * 限制多次登录，8秒内请求超过4即限制60秒不能登录
      *
      * @param user
      * @return
      */
     @Log
+    @VisitLimit(limit = 4, rangeTime = 8, limitTime = 60)
     @PostMapping("/login")
     public R login(@RequestBody User user) {
         // 密码加盐加密
