@@ -28,6 +28,20 @@ public interface GlobalConstant {
     String LOGIN_METHOD = "login";
 
     /**
+     * 登录url
+     */
+    String LOGIN_URL = "/system/user/login";
+
+    /**
+     * 注册url
+     */
+    String REGISTER_URL = "/system/user/add";
+    /**
+     * 健康监控url
+     */
+    String ACTUATOR_URL = "/actuator";
+
+    /**
      * jwt秘钥
      */
     String SECRET = "miracle_jwt";

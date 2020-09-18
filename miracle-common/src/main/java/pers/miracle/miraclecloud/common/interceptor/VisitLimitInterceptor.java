@@ -1,8 +1,5 @@
 package pers.miracle.miraclecloud.common.interceptor;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -24,8 +21,6 @@ import java.lang.reflect.Method;
  * @Version V1.0
  **/
 public class VisitLimitInterceptor implements HandlerInterceptor {
-    Logger logger = LoggerFactory.getLogger(VisitLimitInterceptor.class);
-
     @Autowired
     private RedisUtil redisUtil;
 
@@ -75,9 +70,8 @@ public class VisitLimitInterceptor implements HandlerInterceptor {
 
                 // 要返回的响应消息
                 String msg = "小盆友！你操作太频繁了！请在" + expireTime + "秒后再访问";
-                int code = GlobalConstant.VISIT_LIMIT;
 
-                ResponseUtil.responseJson(response, code, msg);
+                ResponseUtil.response(response, GlobalConstant.VISIT_LIMIT, msg);
                 return false;
             }
 

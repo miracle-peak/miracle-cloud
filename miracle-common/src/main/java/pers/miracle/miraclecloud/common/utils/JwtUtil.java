@@ -62,25 +62,25 @@ public class JwtUtil {
      * @return
      */
     public static Jwt validateJwt(String jwt) {
-
         Jwt validate = new Jwt();
-
         Claims claims = null;
 
+        validate.setSuccess(false);
         try {
             claims = parseJwt(jwt);
+            if (! claims.containsKey(GlobalConstant.JWT_ID)) {
+                log.error("可能存在伪造token，无 id key");
+                return validate;
+            }
             validate.setSuccess(true);
             validate.setClaims(claims);
         } catch (ExpiredJwtException e) {
-            validate.setSuccess(false);
             validate.setErrCode(GlobalConstant.JWT_EXPIRE);
             log.warn("jwt过期:{}", e.getMessage());
         } catch (Exception e) {
             log.error("jwt Exception--->" + e.getMessage());
-            validate.setSuccess(false);
             validate.setErrCode(GlobalConstant.JWT_EXCEPTION);
         }
-
         return validate;
     }
 

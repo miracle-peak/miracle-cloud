@@ -19,9 +19,15 @@ public class RibbonController {
     @Value("${service-url.system-service}")
     private String systemServiceUrl;
 
+    /**
+     * 对system系统模块进行负载
+     *
+     * @param module
+     * @param url
+     * @return
+     */
     @GetMapping("/system/{module}/{url}")
     public R getMethodSystem(@PathVariable("module") String module, @PathVariable("url") String url) {
-
         url = module + "/" + url;
 
         return restTemplate.getForObject(systemServiceUrl + "/system/" + url, R.class);

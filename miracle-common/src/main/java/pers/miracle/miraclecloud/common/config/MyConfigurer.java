@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import pers.miracle.miraclecloud.common.constant.GlobalConstant;
 import pers.miracle.miraclecloud.common.interceptor.JwtInterceptor;
 import pers.miracle.miraclecloud.common.interceptor.VisitLimitInterceptor;
 
@@ -33,8 +34,10 @@ public class MyConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         registry.addInterceptor(getInterceptor())
-                // 不拦截登录请求
-                .excludePathPatterns("/user/login")
+                // 不拦截登录,注册，监控请求
+                .excludePathPatterns(GlobalConstant.LOGIN_URL)
+                .excludePathPatterns(GlobalConstant.REGISTER_URL)
+                .excludePathPatterns(GlobalConstant.ACTUATOR_URL)
                 .excludePathPatterns("/webjars/**")
                 .addPathPatterns("/**");
 

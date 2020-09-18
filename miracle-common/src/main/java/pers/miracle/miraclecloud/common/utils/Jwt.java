@@ -13,8 +13,6 @@ public class Jwt {
 
     private Claims claims;
 
-
-
     public int getErrCode() {
         return errCode;
     }
