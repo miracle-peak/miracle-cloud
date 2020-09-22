@@ -1,31 +1,47 @@
 package pers.miracle.miraclecloud.common;
 
+import com.sun.management.OperatingSystemMXBean;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import pers.miracle.miraclecloud.common.utils.RedisUtil;
-
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
+import java.lang.management.ManagementFactory;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 
 //@SpringBootTest
 class MiracleCommonApplicationTests {
 
     @Test
     void contextLoads() {
-        // 当前文件系统类
-        FileSystemView fsv = FileSystemView.getFileSystemView();
-        // 列出所有windows 磁盘
-        File[] fs = File.listRoots();
-        // 显示磁盘卷标
-        for (int i = 0; i < fs.length; i++) {
-            System.out.println(fsv.getSystemDisplayName(fs[i]));
-            System.out.print("总大小" + FormetFileSize(fs[i].getTotalSpace()));
-            System.out.println("剩余" + FormetFileSize(fs[i].getFreeSpace()));
+        int[] nums = new int[]{3, 4, -1, 1};
+        int i = firstMissingPositive(nums);
+
+        System.out.println("i=" + i);
+    }
+
+    public int firstMissingPositive(int[] nums) {
+        int len = nums.length;
+        for(int i = 0; i < len; ++i){
+            if(nums[i] <= 0){
+                nums[i] = len + 1;
+            }
+        }
+        System.out.println("nums:" + Arrays.toString(nums));
+        for(int i = 0; i < len; ++i){
+            int n = Math.abs(nums[i]);
+            if(n <= len){
+                nums[n - 1] = -Math.abs(nums[n - 1]);
+            }
         }
 
+        for(int i = 0; i < len; ++i){
+            if(nums[i] > 0){
+                return i + 1;
+            }
+        }
+        return len + 1;
     }
+
 
     public  String FormetFileSize(long fileS) {
         DecimalFormat df = new DecimalFormat("#.00");

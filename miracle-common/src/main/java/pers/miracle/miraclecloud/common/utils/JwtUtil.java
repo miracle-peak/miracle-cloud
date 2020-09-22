@@ -7,13 +7,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
-
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +36,7 @@ public class JwtUtil {
 
         info.put(GlobalConstant.JWT_ID, id);
         info.put("userName", userName);
-
+        // 加密秘钥
         SecretKey key = getSecret();
 
         String jwt = Jwts.builder()

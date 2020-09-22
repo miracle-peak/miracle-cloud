@@ -10,6 +10,9 @@ import org.springframework.web.client.RestTemplate;
 /**
  * 负载均衡
  * nacos封装了ribbon,天生支持负载均衡
+ * Ribbon和Nginx的区别：
+ * Nginx性能好，但Ribbon可以剔除不健康节点，Nginx剔除比较麻烦，
+ * Ribbon是客户端负载均衡，Nginx是服务端负载均衡
  *
  * @author: 蔡奇峰
  * @date: 2020/9/12 下午5:13

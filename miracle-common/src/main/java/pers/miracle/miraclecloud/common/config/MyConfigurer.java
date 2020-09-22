@@ -18,7 +18,6 @@ import pers.miracle.miraclecloud.common.interceptor.VisitLimitInterceptor;
  **/
 @Configuration
 public class MyConfigurer implements WebMvcConfigurer {
-
     @Bean
     public JwtInterceptor getInterceptor() {
         return new JwtInterceptor();
@@ -29,18 +28,18 @@ public class MyConfigurer implements WebMvcConfigurer {
         return new VisitLimitInterceptor();
     }
 
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-
+        // 权限认证拦截器
         registry.addInterceptor(getInterceptor())
                 // 不拦截登录,注册，监控请求
                 .excludePathPatterns(GlobalConstant.LOGIN_URL)
                 .excludePathPatterns(GlobalConstant.REGISTER_URL)
                 .excludePathPatterns(GlobalConstant.ACTUATOR_URL)
                 .excludePathPatterns("/webjars/**")
-                .addPathPatterns("/**");
 
+                .addPathPatterns("/**");
+        // 限制访问拦截器
         registry.addInterceptor(getVisitList())
                 .addPathPatterns("/**");
     }

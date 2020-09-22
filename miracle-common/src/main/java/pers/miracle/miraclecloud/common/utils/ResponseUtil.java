@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * @author: 蔡奇峰
@@ -18,18 +17,18 @@ public class ResponseUtil {
 
     /**
      * 拦截并响应
-     * 使用map封装
+     * 使用 JSONObject(fastjson) 封装
      *
      * @param msg
      * @param code
      * @param response
      */
     public static void response(String msg, Integer code, HttpServletResponse response) {
-        Map<String, Object> map = new HashMap<>(6);
-        map.put("message", msg);
-        map.put("code", code);
+        JSONObject json = new JSONObject();
+        json.put("message", msg);
+        json.put("code", code);
 
-        ResponseUtil.returnJson(response, map);
+        ResponseUtil.returnJson(response, json);
     }
 
     /**
@@ -39,14 +38,10 @@ public class ResponseUtil {
      * @param value
      */
     @CrossOrigin
-    public static void returnJson(HttpServletResponse response, Object value) {
-
+    public static void returnJson(HttpServletResponse response, JSONObject value) {
         OutputStream outputStream = null;
 
-        JSONObject object = new JSONObject();
-        object.put("data", value);
-        String result = object.toJSONString();
-
+        String result = value.toJSONString();
         try {
             response.setCharacterEncoding("utf-8");
             response.setContentType("text/json");
@@ -70,7 +65,7 @@ public class ResponseUtil {
 
     /**
      * 提供响应
-     * 使用 R 类转json格式字符串
+     * 使用 R 类转json字符串
      *
      * @param response
      * @param code

@@ -84,7 +84,7 @@ public class RoleController {
             menuIds.add(menu.getId());
         }
         // 菜单列表构建成菜单树
-        role.setMenus(RoleMenuVO.buildMenuTree(role.getMenus(), null));
+        role.setMenus(RoleMenuVO.buildMenuTree(role.getMenus()));
         return R.ok(role).data("ids", menuIds);
     }
 

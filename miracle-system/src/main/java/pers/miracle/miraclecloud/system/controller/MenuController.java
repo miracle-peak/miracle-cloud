@@ -93,6 +93,9 @@ public class MenuController {
     @GetMapping("/menuTree/{userId}")
     public R menuTreeByUser(@PathVariable("userId") String userId) {
         List<String> roleIds = userService.rolesByUserId(userId);
+        if(roleIds.size() == 0){
+            return R.error("对不起，该用户无角色权限！");
+        }
         List<Menu> menus = service.listByRole(roleIds);
 
         return R.ok(menus);
@@ -109,6 +112,9 @@ public class MenuController {
         String userId = JwtUtil.getUserIdByJwt(request);
 
         List<String> roleIds = userService.rolesByUserId(userId);
+        if(roleIds.size() == 0){
+            return R.error("对不起，该用户无角色权限！");
+        }
         List<Menu> menus = service.listByRole(roleIds);
 
         return R.ok(menus);

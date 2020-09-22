@@ -33,7 +33,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     @Override
     public List<Menu> ListByMenu(Menu menu) {
         // 构建菜单树
-        List<Menu> menuTree = RoleMenuVO.buildMenuTree(menuMapper.ListByMenu(menu), null);
+        List<Menu> menuTree = RoleMenuVO.buildMenuTree(menuMapper.ListByMenu(menu));
         return menuTree;
     }
 
@@ -45,7 +45,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     @Override
     public List<Menu> listByRole(Collection<String> roleIds) {
-        return RoleMenuVO.buildMenuTree(menuMapper.listByRole(roleIds), null);
+        return RoleMenuVO.buildMenuTree(menuMapper.listByRole(roleIds));
     }
 
 
