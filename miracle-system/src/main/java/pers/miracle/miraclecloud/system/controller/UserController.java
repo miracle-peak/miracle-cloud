@@ -104,7 +104,6 @@ public class UserController {
      */
     @PostMapping("/update")
     public R update(@RequestBody UserRoleVO vo) {
-        System.out.println("vo:" + vo.toString());
         service.updateRole(vo);
         return R.ok();
     }

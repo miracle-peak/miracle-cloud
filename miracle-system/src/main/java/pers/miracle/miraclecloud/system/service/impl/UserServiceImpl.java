@@ -3,6 +3,7 @@ package pers.miracle.miraclecloud.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
@@ -85,6 +86,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @param vo
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addUser(UserRoleVO vo) {
         save(vo);
 
@@ -99,6 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @param vo
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateRole(UserRoleVO vo) {
         updateById(vo);
         mapper.clearRole(vo.getUserId());
@@ -113,6 +116,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
      * @param ids
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteRole(String[] ids) {
         removeByIds(Arrays.asList(ids));
 

@@ -36,20 +36,22 @@ public class JwtInterceptor implements HandlerInterceptor {
             if (!validate.isSuccess()) {
                 ResponseUtil.response("对不起！您的token 有误！validate result :token error",
                         validate.getErrCode(), response);
+                return false;
             }
             // 获取解密的jwt
             Claims claims = validate.getClaims();
             String id = claims.get(GlobalConstant.JWT_ID).toString();
             // 获取redis中jwt
             String token = redisUtil.getToken(id);
-            // jwt不一致
+            // jwt不一致或者redis中没有
             if (!jwt.equals(token)) {
                 ResponseUtil.response("对不起！您的token 有误！token error",
                         GlobalConstant.TOKEN_ERROR, response);
+                return false;
             }
             return true;
-            // 被拦截时也给出响应
         }
+        // 被拦截时也给出响应
         ResponseUtil.response("对不起！您木有权限！请尝试登录",
                 GlobalConstant.TOKEN_NONE, response);
 

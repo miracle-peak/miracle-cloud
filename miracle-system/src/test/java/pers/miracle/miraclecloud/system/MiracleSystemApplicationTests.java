@@ -33,6 +33,19 @@ class MiracleSystemApplicationTests {
 //        }
     }
 
+    @Test
+    public void test(){
+        List<String> list = new ArrayList<>();
+        // 加同步锁
+        Collections.synchronizedList(list);
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.toString();
+
+    }
+
+
 
 
 }

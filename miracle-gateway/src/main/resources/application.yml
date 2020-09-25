@@ -23,7 +23,7 @@ spring:
 #        - id: ribbon
 #          uri: lb://miracle-ribbon
 #          predicates:
-            - Path=/**
+#            - Path=/**
         # 路由的id,没有规定规则但要求唯一,建议配合服务名
         - id: system
           #匹配后提供服务的路由地址
