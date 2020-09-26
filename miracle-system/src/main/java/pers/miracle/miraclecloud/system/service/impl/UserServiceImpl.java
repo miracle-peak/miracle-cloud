@@ -1,6 +1,7 @@
 package pers.miracle.miraclecloud.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +28,8 @@ import static pers.miracle.miraclecloud.common.constant.GlobalConstant.USER_KEY_
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
-
     @Autowired
     private UserMapper mapper;
-
     @Resource
     private RedisUtil redisUtil;
 
@@ -50,34 +49,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .orElseThrow(() -> new RuntimeException("登录失败！用户名或密码错误！"));*/
 
         User user = mapper.getOne(userName, password);
-        if (null != user) {
-            // 使用布隆过滤器 String token = redisUtil.getByBloomFilter("bloom-" + user.getUserId());
-            String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId());
+        Assert.notNull(user, "用户名或密码错误！");
+        // 使用布隆过滤器 String token = redisUtil.getByBloomFilter("bloom-" + user.getUserId());
+        // 从缓存中获取jwt
+        String token = redisUtil.getStr(USER_KEY_PREFIX + user.getUserId());
 
-            // 不存在这个token 即第一次登录或者过期删除
-            if (StringUtils.isEmpty(token)) {
-                // 保证redis和jwt设置过期时间相同
-                Calendar calendar = Calendar.getInstance();
-                // 设置过期时间6天
-                calendar.add(Calendar.HOUR, 24 * 6);
-                // 过期时间
-                Date expireTime = calendar.getTime();
-                // 获取过期时间的时间戳单位为毫秒, 使用同一个 expireTime 保证 jwt 和 redis key过期时间一致
-                long time = expireTime.getTime() - System.currentTimeMillis();
-                // 创建jwt
-                token = JwtUtil.createJwt(user.getUserId(), user.getUserName(), expireTime);
-                // 使用布隆过滤器 redisUtil.setByBloomFilter("bloom-" + user.getUserId(), token);
-                // 存jwt到redis过期时间6天
-                redisUtil.setToken(USER_KEY_PREFIX + user.getUserId(), token, time);
-
-            }
-
-            return token;
-        } else {
-            throw new RuntimeException("用户名或密码错误！");
+        // 不存在这个token 即第一次登录或者过期删除
+        if (StringUtils.isEmpty(token)) {
+            // 保证redis和jwt设置过期时间相同
+            Calendar calendar = Calendar.getInstance();
+            // 设置过期时间6天
+            calendar.add(Calendar.HOUR, 24 * 6);
+            // 过期时间
+            Date expireTime = calendar.getTime();
+            // 获取过期时间的时间戳单位为毫秒, 使用同一个 expireTime 保证 jwt 和 redis key过期时间一致
+            long time = expireTime.getTime() - System.currentTimeMillis();
+            // 创建jwt
+            token = JwtUtil.createJwt(user.getUserId(), user.getUserName(), expireTime);
+            // 使用布隆过滤器 redisUtil.setByBloomFilter("bloom-" + user.getUserId(), token);
+            // 存jwt到redis过期时间6天
+            redisUtil.setToken(USER_KEY_PREFIX + user.getUserId(), token, time);
         }
 
-
+        return token;
     }
 
     /**

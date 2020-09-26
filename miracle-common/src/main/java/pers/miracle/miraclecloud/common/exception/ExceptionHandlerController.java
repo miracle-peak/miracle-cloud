@@ -26,10 +26,8 @@ public class ExceptionHandlerController implements ErrorController {
         // 错误处理逻辑
         int status = response.getStatus();
         if (status == 404) {
-//            return "小伙子你有点调皮哦！(*^▽^*)not found";
             return new R(GlobalConstant.NOT_FOUND, "小伙子你有点调皮哦！(*^▽^*)not found");
         } else if (status == 500) {
-//            return "小伙子你麻烦大了！(*^▽^*)";
             return new R(GlobalConstant.EXCEPTION_500, "小伙子你麻烦大了！(*^▽^*)");
         } else if (status >= 100 && status < 200) {
             return new R(GlobalConstant.HTTP_ERROR_100, null);

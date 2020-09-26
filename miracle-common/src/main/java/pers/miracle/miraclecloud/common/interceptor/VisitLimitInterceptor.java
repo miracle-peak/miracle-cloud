@@ -1,5 +1,6 @@
 package pers.miracle.miraclecloud.common.interceptor;
 
+import io.jsonwebtoken.lang.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,6 +13,7 @@ import pers.miracle.miraclecloud.common.utils.ResponseUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * 访问限制拦截器
@@ -42,6 +44,7 @@ public class VisitLimitInterceptor implements HandlerInterceptor {
             if (visitLimit == null) {
                 return true;
             }
+
             int limit = visitLimit.limit();
             int expireTime = visitLimit.limitTime();
             int rangeTime = visitLimit.rangeTime();
