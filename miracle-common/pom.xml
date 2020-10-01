@@ -35,7 +35,6 @@
             <version>19.0</version>
         </dependency>
 
-
         <!-- fastjson-->
         <dependency>
             <groupId>com.alibaba</groupId>

@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.scheduling.annotation.EnableAsync;
-import pers.miracle.miraclecloud.common.annotation.EnableGlobalExceptionHandler;
 
 /**
  * @author miracle
@@ -15,7 +14,6 @@ import pers.miracle.miraclecloud.common.annotation.EnableGlobalExceptionHandler;
 @EnableEncryptableProperties
 @EnableAsync
 @EnableDiscoveryClient
-//@EnableGlobalExceptionHandler // 使用异常处理类
 @SpringBootApplication(scanBasePackages = {"pers.miracle.miraclecloud.system", "pers.miracle.miraclecloud.common"})
 public class MiracleSystemApplication {
 

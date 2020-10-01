@@ -5,6 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import pers.miracle.miraclecloud.common.utils.Md5Util;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 //@SpringBootTest
 class MiracleSystemApplicationTests {
@@ -45,7 +48,46 @@ class MiracleSystemApplicationTests {
 
     }
 
+    private int count = 0;
+    private AtomicInteger num = new AtomicInteger(0);
+    // 必须作为成员变量，否则获取的不是这个实列对象的锁，而是某个实列对象的方法，则无法达到同步效果
+    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    ReentrantReadWriteLock.WriteLock writeLock = lock.writeLock();
+    ReentrantReadWriteLock.ReadLock readLock = lock.readLock();
 
+    @Test
+    public void readWriteLock(){
 
+        for (int i = 0; i < 10618; i++) {
+            new Thread(() ->{
+
+                add();
+//                num.getAndIncrement();
+            }).start();
+        }
+
+        System.out.println("count=" + count);
+        System.out.println("num=" + num);
+
+    }
+
+    public synchronized void add(){
+//        writeLock.lock();
+//        readLock.lock();
+        try {
+            // 模拟延迟
+            try {
+                TimeUnit.MICROSECONDS.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            ++count;
+        } finally {
+//            readLock.unlock();
+//            writeLock.unlock();
+        }
+
+    }
 
 }

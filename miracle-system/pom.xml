@@ -103,24 +103,6 @@
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>-->
 
-        <!--包含了sleuth+zipkin-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zipkin</artifactId>
-        </dependency>
-
-        <!--<dependency>
-            <groupId>pers.miracle.miraclecloud.sentinel</groupId>
-            <artifactId>miracle-sentinel</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>pers.miracle.miraclecloud.common</groupId>
-                    <artifactId>miracle-common</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
-
     </dependencies>
 
     <build>
