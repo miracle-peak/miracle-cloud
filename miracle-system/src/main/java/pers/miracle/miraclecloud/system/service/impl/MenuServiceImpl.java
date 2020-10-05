@@ -1,7 +1,6 @@
 package pers.miracle.miraclecloud.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.miracle.miraclecloud.system.entity.Menu;
@@ -9,9 +8,7 @@ import pers.miracle.miraclecloud.system.mapper.MenuMapper;
 import pers.miracle.miraclecloud.system.service.IMenuService;
 import pers.miracle.miraclecloud.system.vo.RoleMenuVO;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**

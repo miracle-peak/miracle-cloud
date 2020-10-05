@@ -1,6 +1,7 @@
 package pers.miracle.miraclecloud.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.util.ArrayList;
@@ -54,6 +55,7 @@ public class Menu {
     /**
      * 子菜单
      */
+    @TableField(exist = false)
     private List<Menu> children = new ArrayList<Menu>();
 
 

@@ -1,5 +1,6 @@
 package pers.miracle.miraclecloud.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
@@ -46,6 +47,35 @@ public class MenuController {
     public R list(@RequestBody(required = false) Menu menu) {
 
         return R.ok(service.ListByMenu(menu));
+    }
+
+    /**
+     * 根据菜单id查询菜单及子菜单
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/children/{id}")
+    public R getById(@PathVariable Long id) {
+        Menu menu = service.getById(id);
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper();
+        queryWrapper.eq("parent_id", id);
+
+        menu.setChildren(service.list(queryWrapper));
+
+        return R.ok(menu);
+    }
+
+    /**
+     * 根据菜单id查询菜单(不包含子菜单)
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public R getMenu(@PathVariable Long id) {
+
+        return R.ok(service.getById(id));
     }
 
     /**
