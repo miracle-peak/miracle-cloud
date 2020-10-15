@@ -47,6 +47,31 @@ class MiracleSystemApplicationTests {
         builder.toString();
 
     }
+    @Test
+    public void cache(){
+
+        int[] n = new int[]{10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+        int[] ints = calculateStatistics(n);
+        System.out.println("res=" + ints);
+
+    }
+
+
+    public int[] calculateStatistics (int[] dataArr) {
+        // write code here
+        int[] result = new int[4];
+        Arrays.sort(dataArr);
+        int len = dataArr.length;
+        int m = len % 2 == 0 ? dataArr.length / 2 : (len / 2) + 1;
+        int top = len % 10 == 0 ? (int) (len * 0.9) : (int)(len  * 0.9);
+        result[1] = dataArr[0];
+        result[2] = dataArr[len - 1];
+        result[0] = dataArr[m];
+        result[3] = dataArr[top];
+
+        return result;
+
+    }
 
     private int count = 0;
     private AtomicInteger num = new AtomicInteger(0);

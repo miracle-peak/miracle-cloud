@@ -43,23 +43,22 @@ public class RoleController {
     public R list(Role role, @RequestParam(value = "pageSize", required = false) Integer pageSize,
                   @RequestParam(value = "pageNum", required = false) Integer pageNum) {
         QueryWrapper queryWrapper = new QueryWrapper();
-        if (null != role) {
-            if (StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
-                // 仅根据名称查询
-                queryWrapper.like("name", role.getName());
 
-            } else if (!StringUtils.isEmpty(role.getLocked()) && StringUtils.isEmpty(role.getName())) {
-                // 仅根据是否锁定状态查询
-                queryWrapper.eq("locked", role.getLocked());
+        if (StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
+            // 仅根据名称查询
+            queryWrapper.like("name", role.getName());
 
-            } else if (!StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
-                // 根据名称及是否锁定状态查询
-                queryWrapper.eq("locked", role.getLocked());
-                queryWrapper.like("name", role.getName());
+        } else if (!StringUtils.isEmpty(role.getLocked()) && StringUtils.isEmpty(role.getName())) {
+            // 仅根据是否锁定状态查询
+            queryWrapper.eq("locked", role.getLocked());
 
-            }
+        } else if (!StringUtils.isEmpty(role.getLocked()) && !StringUtils.isEmpty(role.getName())) {
+            // 根据名称及是否锁定状态查询
+            queryWrapper.eq("locked", role.getLocked());
+            queryWrapper.like("name", role.getName());
+
         }
-        if (StringUtils.isEmpty(pageSize) || StringUtils.isEmpty(pageNum)) {
+        if (null == pageSize || null == pageNum) {
             return R.ok(service.list());
         } else {
             Page<Role> rolePage = new Page<Role>().setSize(pageSize).setCurrent(pageNum);

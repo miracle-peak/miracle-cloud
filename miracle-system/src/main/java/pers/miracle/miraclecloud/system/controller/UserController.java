@@ -1,13 +1,17 @@
 package pers.miracle.miraclecloud.system.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import pers.miracle.miraclecloud.common.annotation.Log;
 import pers.miracle.miraclecloud.common.annotation.VisitLimit;
 import pers.miracle.miraclecloud.common.utils.JwtUtil;
 import pers.miracle.miraclecloud.common.utils.Md5Util;
+import pers.miracle.miraclecloud.common.utils.PageInfo;
 import pers.miracle.miraclecloud.common.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import pers.miracle.miraclecloud.system.entity.User;
@@ -77,11 +81,34 @@ public class UserController {
      * @return
      */
     @GetMapping("/list")
-    public R list(User user, @RequestParam("pageSize") Integer pageSize,
-                  @RequestParam("pageNum") Integer pageNum) {
+    public R list(User user, @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                  @RequestParam(value = "pageNum", required = false) Integer pageNum) {
+        QueryWrapper queryWrapper = new QueryWrapper();
+        if (null != user) {
+            if (StringUtils.isEmpty(user.getLocked()) && !StringUtils.isEmpty(user.getUserName())) {
+                // 仅根据名称查询
+                queryWrapper.like("user_name", user.getUserName());
+            } else if (!StringUtils.isEmpty(user.getLocked()) && StringUtils.isEmpty(user.getUserName())) {
+                // 仅根据是否锁定状态查询
+                queryWrapper.eq("locked", user.getLocked());
 
-        List<User> list = service.listByUser(user);
-        return R.ok(list);
+            } else if (!StringUtils.isEmpty(user.getLocked()) && !StringUtils.isEmpty(user.getUserName())) {
+                // 根据名称及是否锁定状态查询
+                queryWrapper.eq("locked", user.getLocked());
+                queryWrapper.like("user_name", user.getUserName());
+            }
+        }
+        if (null == pageSize || null == pageNum) {
+            return R.ok(service.listByUser(user));
+        } else {
+            Page<User> rolePage = new Page<User>().setSize(pageSize).setCurrent(pageNum);
+            Page page = service.page(rolePage, queryWrapper);
+
+            PageInfo pageInfo = new PageInfo(page.getTotal(), page.getSize(),
+                    page.getCurrent(), page.getRecords());
+
+            return R.ok(pageInfo);
+        }
     }
 
     /**
