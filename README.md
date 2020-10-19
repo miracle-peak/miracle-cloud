@@ -11,7 +11,7 @@
 
 #### 安装教程
 
-1.  下载sentinel控制台jar包或者使用项目sentinel目录下的sentinel-dashboard-1.8.0，[制作镜像并启动](https://gitee.com/miracle-peak/miracle-cloud/blob/master/sentinel/sentinel.md)
+1.[官网下载sentinel控制台jar包](https://github.com/alibaba/Sentinel/releases)或者使用项目[sentinel目录下的sentinel-dashboard-1.8.0](https://gitee.com/miracle-peak/miracle-cloud/blob/master/sentinel/sentinel-dashboard-1.8.0.jar)，[制作镜像并启动](https://gitee.com/miracle-peak/miracle-cloud/blob/master/sentinel/sentinel.md)
 2.  启动nacos端口：8848
 3.  启动redis，zipkin
 
