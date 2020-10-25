@@ -23,6 +23,8 @@
         <module>miracle-system</module>
         <!-- 负载模块-->
         <module>miracle-ribbon</module>
+        <!-- 配置中心模块-->
+        <module>miracle-config</module>
         <!--限流模块-->
 <!--        <module>miracle-sentinel</module>-->
     </modules>

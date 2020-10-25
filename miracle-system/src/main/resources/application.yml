@@ -15,10 +15,8 @@ spring:
 #      #为了使用速率限制采样器，以选择每秒间隔 接受的trace量，最小数字为0，最大值为2,147,483,647
 #      rate: 10000
 
-
-
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/miracle_cloud_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false
+    url: jdbc:mysql://127.0.0.1:3306/miracle_cloud_db?useUnicode=true&zeroDateTimeBehavior=convertToNull&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&tinyInt1isBit=false&allowPublicKeyRetrieval=true
     username: ENC(GNTGqKTs2Iu5LCeKJMXiYQ==)
     password: ENC(BS8Z50ImQg3pd0yYonKB5Q==)
     driver-class-name: com.mysql.cj.jdbc.Driver

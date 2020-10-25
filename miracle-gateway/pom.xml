@@ -33,6 +33,12 @@
         </dependency>
 
         <dependency>
+            <groupId>pers.miracle.miraclecloud</groupId>
+            <artifactId>miracle-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
@@ -43,6 +49,10 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
         <!-- nacos-client1.0.0版本有bug:nacos-discovery失败,故将版本降低到0.9.x -->

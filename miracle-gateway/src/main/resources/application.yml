@@ -9,6 +9,15 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
+  zipkin:
+    base-url: http://tale.miraclepeak.xyz:6388/
+  sleuth:
+    sampler:
+      #采样率值介于 0 到 1 之间，默认为0, 1 则表示全部采集,但是会降低接口调用效率:
+      probability: 1
+      #为了使用速率限制采样器，以选择每秒间隔 接受的trace量，最小数字为0，最大值为2,147,483,647
+      rate: 10000
+
   cloud:
     nacos:
       discovery:

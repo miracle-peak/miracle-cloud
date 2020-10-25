@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: miracle-config
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        shared-dataids: ${spring.application.name}.${spring.cloud.nacos.config.file-extension}

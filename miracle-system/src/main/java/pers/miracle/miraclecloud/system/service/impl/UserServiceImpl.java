@@ -45,7 +45,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         /*User one = query().eq("user_name", userName)
                 .eq("password", password)
                 //.one();
-                .oneOpt()
+                .oneOpt()cker 
                 .orElseThrow(() -> new RuntimeException("登录失败！用户名或密码错误！"));*/
 
         User user = mapper.getOne(userName, password);
