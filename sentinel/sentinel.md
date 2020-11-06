@@ -21,7 +21,7 @@ docker run -d --name sentinel -p 9670:8080 sentinel镜像id
             }
          ]
 ```
-![nacos中配置sentinel限流规则](https://images.gitee.com/uploads/images/2020/1106/145706_a1d9780c_4776729.png "2020-11-06 14-56-07 的屏幕截图.png")
+![nacos中配置sentinel限流规则](https://images.gitee.com/uploads/images/2020/1106/150010_0eb895f1_4776729.png "2020-11-06 14-59-34 的屏幕截图.png")
  * resource : 资源名，限流规则作用对象，一般为请求URI
  * limitApp : 控流针对的调用来源，default则不区分调用来源
  * grade :  限流阈值类型；0表示根据并发量来限流，1表示根据QPS来进行限流
@@ -65,7 +65,7 @@ spring:
           nacos:
             server-addr: 127.0.0.1:8466
             # dataId是 nacos 配置列表的Data ID:
-            dataId: miracle-sentinel
+            dataId: sentinel-service
             groupId: DEFAULT_GROUP
             # nacos中配置内容的数据格式
             data-type: json
