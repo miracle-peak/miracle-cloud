@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import pers.miracle.miraclecloud.common.utils.Md5Util;
 
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -115,6 +119,23 @@ class MiracleSystemApplicationTests {
         System.out.println(res);
 
         return res;
+    }
+
+    @Test
+    public void io(){
+
+        try {
+            Selector selector = Selector.open();
+
+            ServerSocketChannel channel = ServerSocketChannel.open();
+            channel.configureBlocking(false);
+            channel.register(selector, SelectionKey.OP_ACCEPT);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Test

@@ -23,7 +23,7 @@
             <groupId>pers.miracle.miraclecloud.common</groupId>
             <artifactId>miracle-common</artifactId>
         </dependency>
-
+        <!-- 配置模块-->
         <dependency>
             <groupId>pers.miracle.miraclecloud</groupId>
             <artifactId>miracle-config</artifactId>
@@ -67,19 +67,6 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.3.2</version>
-        </dependency>
-
-        <!-- 邮件 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
-
-        <!-- rabbitmq-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-            <version>1.5.2.RELEASE</version>
         </dependency>
 
         <!--springboot中的redis依赖-->

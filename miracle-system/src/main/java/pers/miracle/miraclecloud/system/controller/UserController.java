@@ -20,6 +20,7 @@ import pers.miracle.miraclecloud.system.vo.UserRoleVO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 /**
@@ -178,7 +179,7 @@ public class UserController {
         // 密码加盐加密
         user.setPassword(Md5Util.saltEncryption(user.getPassword()));
         // 生成用户唯一id,并发大的时候可能重复, 可用IdUtil.simpleUUID()替代 博主简化处理在不创建creat_time字段,还可以知道时间
-        LocalDate time = LocalDate.now();
+        LocalDate time = LocalDate.now(ZoneId.of("UTC+8"));
         Integer num = new Random().nextInt(99999);
         String id = time + "-" + (System.currentTimeMillis() + "").substring(7) + num;
         user.setUserId(id);

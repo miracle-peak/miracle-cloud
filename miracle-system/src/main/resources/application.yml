@@ -53,6 +53,8 @@ spring:
 
   redis:
     database: 0
+    # 使用nacos配置中心的redis host
+    #host: ${redis-host}
     host: 127.0.0.1
     port: 6379
     # 连接超时时间
