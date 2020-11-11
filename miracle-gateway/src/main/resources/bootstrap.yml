@@ -1,0 +1,43 @@
+server:
+  port: 9908
+
+
+spring:
+  application:
+    name: miracle-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
+        shared-dataids: miracle-config.yaml
+
+
+    gateway:
+      discovery:
+        locator:
+          # 开启从注册中心动态创建路由的功能，利用微服务名称进行路由
+          enabled: true
+      routes:
+#        - id: ribbon
+#          uri: lb://miracle-ribbon
+#          predicates:
+#            - Path=/**
+        # 路由的id,没有规定规则但要求唯一,建议配合服务名
+        - id: system
+          #匹配后提供服务的路由地址
+          uri: lb://miracle-system
+          #          uri: http://localhost:8099
+          predicates:
+            # 断言，路径相匹配的进行路由
+            - Path=/system/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false

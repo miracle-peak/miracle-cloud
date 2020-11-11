@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
     public R runtimeException(RuntimeException e) {
         log.error("{}: 运行时异常：{}" ,e.getClass(), e.getMessage());
 
-        return R.error().message("对不起，操作失败！请您重试");
+        return R.error().message(e.getMessage());
     }
 
 

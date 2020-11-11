@@ -30,9 +30,6 @@ spring:
       max-lifetime: 17800000
 
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
     # sentinel 限流
     sentinel:
       transport:
@@ -53,10 +50,9 @@ spring:
 
   redis:
     database: 0
-    # 使用nacos配置中心的redis host
-    #host: ${redis-host}
-    host: 127.0.0.1
-    port: 6379
+    # 使用nacos配置中心的redis地址及端口redis-host,red-port 如果没配置系统则使用 ：后的
+    host: ${redis-host:127.0.0.1}
+    port: ${red-port:6379}
     # 连接超时时间
     timeout: 8s
     lettuce:

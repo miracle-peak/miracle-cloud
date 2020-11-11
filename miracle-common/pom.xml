@@ -12,6 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>miracle-common</name>
     <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
@@ -54,13 +55,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <layout>NONE</layout>  <!--让maven不打包可执行jar，不扫描项目的main函数-->
+                    <classifier>exec</classifier> <!--普通jar和可执行jar不同名，普通jar为xx.jar ， 可执行jar为 xx-exec.jar-->
+                </configuration>
             </plugin>
+
+            <!-- 跳过单元测试 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>
