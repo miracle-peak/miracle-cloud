@@ -21,18 +21,28 @@ spring:
           # 开启从注册中心动态创建路由的功能，利用微服务名称进行路由
           enabled: true
       routes:
-#        - id: ribbon
-#          uri: lb://miracle-ribbon
-#          predicates:
-#            - Path=/**
         # 路由的id,没有规定规则但要求唯一,建议配合服务名
         - id: system
           #匹配后提供服务的路由地址
           uri: lb://miracle-system
-          #          uri: http://localhost:8099
+          # uri: http://localhost:8099
           predicates:
             # 断言，路径相匹配的进行路由
             - Path=/system/**
+
+# 可将上面的路由配置删除在nacos中配置实现动态路由实时修改
+#[  {
+#   "id": "system",
+#   "order": 0,
+#   "predicates": [{
+#                    "args": {
+#                      "pattern": "/system/**"
+#                    },
+#                    "name": "Path"
+#                  }],
+#   "uri": "lb://miracle-system"
+# }]
+
 
 management:
   endpoints:
