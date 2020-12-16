@@ -19,14 +19,14 @@
     </properties>
 
     <dependencies>
-        <!--因为gateway用的是webflex，会和web包中有冲突-->
+        <!--因为gateway用的是webflux，会和web包中有冲突-->
         <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
             <version>2.2.0.RELEASE</version>
         </dependency>-->
 
-        <!-- gateway 中自带webflex，会和web包冲突-->
+        <!-- gateway 中自带webflux，会和web包冲突-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>

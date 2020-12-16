@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import pers.miracle.miraclecloud.common.constant.GlobalConstant;
+
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +27,9 @@ public class JwtUtil {
     /**
      * 生成jwt
      *
-     * @param id
-     * @param userName
-     * @param expireTime
+     * @param id         识别jwt唯一id
+     * @param userName   jwt签名用户名
+     * @param expireTime jwt过期时间 Date类型
      * @return
      */
     public static String createJwt(String id, String userName, Date expireTime) {
@@ -65,7 +66,7 @@ public class JwtUtil {
         validate.setSuccess(false);
         try {
             claims = parseJwt(jwt);
-            if (! claims.containsKey(GlobalConstant.JWT_ID)) {
+            if (!claims.containsKey(GlobalConstant.JWT_ID)) {
                 log.error("可能存在伪造token，无 id key");
                 return validate;
             }
@@ -108,7 +109,7 @@ public class JwtUtil {
     public static String getUserIdByJwt(HttpServletRequest request) {
         String jwt = request.getHeader(GlobalConstant.HEADER_JWT);
         // 如果head的Authorization没有则从cookie中取
-        if (StringUtils.isEmpty(jwt)){
+        if (StringUtils.isEmpty(jwt)) {
             log.warn("请求头的Authorization中没有得到jwt");
             // TODO 如果加上从cookie中获取jwt,在当前浏览器发送任何请求都会带上cookie即不能防止CSRF攻击
             // TODO 前端使用代理且本地保存了cookie
@@ -121,7 +122,7 @@ public class JwtUtil {
         Claims claims = null;
         try {
             claims = JwtUtil.parseJwt(jwt);
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             throw new RuntimeException("身份认证过期请重新登录");
         }
         if (!claims.containsKey(GlobalConstant.JWT_ID)) {

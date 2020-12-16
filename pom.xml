@@ -23,7 +23,7 @@
         <!-- 系统模块-->
         <module>miracle-system</module>
         <!--限流模块-->
-<!--        <module>miracle-sentinel</module>-->
+        <!--        <module>miracle-sentinel</module>-->
     </modules>
 
     <properties>
@@ -120,19 +120,15 @@
     </build>
 
 
-
-   <!-- <repositories>
+    <!--
+    网络差时需启用，否则可能下拉依赖失败，即使你的maven配置了阿里的镜像
+    -->
+    <repositories>
         <repository>
             <id>aliyunmaven</id>
             <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
         </repository>
     </repositories>
 
-    <repositories>
-        <repository>
-            <id>aliyun-repo</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-        </repository>
-    </repositories>-->
 
 </project>
